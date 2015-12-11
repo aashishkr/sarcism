@@ -1,0 +1,170 @@
+-- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+--
+-- Host: localhost    Database: webportalism
+-- ------------------------------------------------------
+-- Server version	5.6.27-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `webportalism`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `webportalism`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `webportalism` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `webportalism`;
+
+--
+-- Table structure for table `data`
+--
+
+DROP TABLE IF EXISTS `data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data` (
+  `EmailId` varchar(100) NOT NULL,
+  `Password` varchar(50) NOT NULL,
+  `FirstName` varchar(45) NOT NULL,
+  `LastName` varchar(45) NOT NULL,
+  `FatherName` varchar(45) NOT NULL,
+  `Contact` varchar(45) DEFAULT NULL,
+  `Batch` varchar(45) NOT NULL,
+  `Gender` varchar(45) DEFAULT NULL,
+  `MotherName` varchar(45) DEFAULT NULL,
+  `DOB` varchar(45) DEFAULT NULL,
+  `AddLine1` varchar(100) DEFAULT NULL,
+  `AddLine2` varchar(100) DEFAULT NULL,
+  `AddCity` varchar(45) DEFAULT NULL,
+  `AddState` varchar(50) DEFAULT NULL,
+  `AddCountry` varchar(50) DEFAULT NULL,
+  `AddPin` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`EmailId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data`
+--
+
+/*!40000 ALTER TABLE `data` DISABLE KEYS */;
+INSERT INTO `data` VALUES ('69saurabh18@gmail.com','saras','Saurabh','Saraswat','K P Saraswat','8797900357','2014-19','Male','Sudha Saraswat','06/01/1995','xyz','qbgfwd','kanpur','up','india','231458'),('aashishkumar96.akr@gmail.com','qazwsxedc1','Aashish','Kumar','Rajesh Kumar','9572383417','2014-18','Male','Sangeeta','14\\12\\1996','3- C- 05','V.V. COLONY','SHAKTINAGAR','UTTAR PRADESH','INDIA','231222');
+/*!40000 ALTER TABLE `data` ENABLE KEYS */;
+
+--
+-- Table structure for table `newsfeed`
+--
+
+DROP TABLE IF EXISTS `newsfeed`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `newsfeed` (
+  `EmailID` varchar(50) NOT NULL,
+  `nf_id` int(9) NOT NULL AUTO_INCREMENT,
+  `nf_title` varchar(50) NOT NULL,
+  `nf_description` longtext NOT NULL,
+  PRIMARY KEY (`nf_id`,`EmailID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newsfeed`
+--
+
+/*!40000 ALTER TABLE `newsfeed` DISABLE KEYS */;
+/*!40000 ALTER TABLE `newsfeed` ENABLE KEYS */;
+
+--
+-- Table structure for table `newsfeedcomments`
+--
+
+DROP TABLE IF EXISTS `newsfeedcomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `newsfeedcomments` (
+  `EmailId` varchar(50) NOT NULL,
+  `CommentId` int(11) NOT NULL AUTO_INCREMENT,
+  `nf_id` int(11) NOT NULL,
+  `comment` longtext NOT NULL,
+  PRIMARY KEY (`CommentId`,`EmailId`,`nf_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newsfeedcomments`
+--
+
+/*!40000 ALTER TABLE `newsfeedcomments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `newsfeedcomments` ENABLE KEYS */;
+
+--
+-- Table structure for table `qualification`
+--
+
+DROP TABLE IF EXISTS `qualification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `qualification` (
+  `qualificationId` int(11) NOT NULL AUTO_INCREMENT,
+  `EmailId` varchar(50) NOT NULL,
+  `Company` varchar(50) NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `fromDate` int(11) NOT NULL,
+  `toDate` int(11) NOT NULL,
+  PRIMARY KEY (`qualificationId`,`EmailId`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `qualification`
+--
+
+/*!40000 ALTER TABLE `qualification` DISABLE KEYS */;
+INSERT INTO `qualification` VALUES (6,'aashishkumar96.akr@gmail.com','Facebook','developer',2013,2018),(7,'aashishkumar96.akr@gmail.com','google','Developer',2006,2012),(8,'69saurabh18@gmail.com','amazon','developer',2018,2019),(9,'69saurabh18@gmail.com','flipkart','Head developer',2006,2012);
+/*!40000 ALTER TABLE `qualification` ENABLE KEYS */;
+
+--
+-- Table structure for table `querydata`
+--
+
+DROP TABLE IF EXISTS `querydata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `querydata` (
+  `EmailID` varchar(100) NOT NULL,
+  `Q_Title` varchar(250) NOT NULL,
+  `Q_Description` longtext NOT NULL,
+  `Q_Type` varchar(50) NOT NULL,
+  `Q_ID` int(9) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`Q_ID`,`EmailID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `querydata`
+--
+
+/*!40000 ALTER TABLE `querydata` DISABLE KEYS */;
+INSERT INTO `querydata` VALUES ('69saurabh18@gmail.com','kchas','niojcaslacnkalc\r\nvmlkds\r\nckldjc','Company Related',1),('69saurabh18@gmail.com','asnc','msnlcsdncasdkcnascmacm;lka','Company Related',2);
+/*!40000 ALTER TABLE `querydata` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-09 12:18:29

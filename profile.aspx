@@ -32,15 +32,8 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Deepak Kumar</strong>
-                             </span> <span class="text-muted text-xs block">Company<b class="caret"></b> </span> </span> </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="profile.html">Profile</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="mailbox.html">Mailbox</a></li>
-                                <li class="divider"></li>
-                                <li><a href="login.html">Logout</a></li>
-                            </ul>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
+                             </span> <span class="text-muted text-xs block">Company </span> </span> </a>
                     </div>
                     <div class="logo-element">
                         SARC
@@ -59,9 +52,9 @@
                 <li class="">
                     <a href=""><i class="fa "></i> <span class="nav-label">Query</span><span class="label label-primary pull-right">NEW</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="">My Queries</a></li>
-                        <li ><a href="">All Queries</a></li>
-                        <li><a href="">Ask a Query</a></li>
+                        <li><a href="My.aspx">My Queries</a></li>
+                        <li ><a href="All.aspx">All Queries</a></li>
+                        <li><a href="Ask.aspx">Ask a Query</a></li>
                     </ul>
                 </li>
                
@@ -80,105 +73,8 @@
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
                 </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
                 <li>
-                    <a href="login.html">
+                    <a href="MainPage.aspx">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
@@ -211,37 +107,42 @@
                                             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
                                                 <label>Name</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">Deepak Kumar</div>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
+                                                <asp:Label ID="user_name1" runat="server" ></asp:Label>
+                                                <asp:Label ID="user_name2" runat="server" ></asp:Label>
+                                            </div>                                            
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
+                                                <asp:Label ID="user_email" runat="server" ></asp:Label>
+                                            </div>                                  
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
                                                 <label>Gender</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >Male</div>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  ><asp:Label ID="user_gender" runat="server" ></asp:Label></div>
                                             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
                                                 <label>Date of Birth</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">06 Jan 1995</div>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"><asp:Label ID="user_dob" runat="server" ></asp:Label></div>
                                         </div>
                                         <div class="row" >
                                             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
-                                                <label>Marital Status</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >Unmarried</div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3">
                                                 <label>Contact No</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >9876543210</div>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  ><asp:Label ID="user_contact" runat="server" ></asp:Label></div>
                                         </div>
                                         <div class="row"  >
                                                 <div  class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
                                                     <label>Father Name</label>
                                                 </div>
-                                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >Komal Prasad Saraswat</div>
+                                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  ><asp:Label ID="user_father" runat="server" ></asp:Label></div>
                                                 <div  class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
                                                     <label>Mother Name</label>
                                                 </div>
-                                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >Sudha Saraswat</div>
+                                                <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  ><asp:Label ID="user_mother" runat="server" ></asp:Label></div>
                                         </div>
                                     </div>
                                 </div><br />
@@ -251,7 +152,9 @@
                                     </div>
                                     <div class="box-body">
                                         <div class="row"  >
-                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >42 Rampuram 200 Ft. PAC Road,<br>Shyam Nagar,<br>Kanpur, Uttar Pradesh - 208013<br>India<br>
+                                            <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  ><asp:Label ID="add_l1" runat="server" ></asp:Label><br><asp:Label ID="add_l2" runat="server" ></asp:Label><br>
+                                                <asp:Label ID="add_city" runat="server" ></asp:Label><asp:Label ID="add_state" runat="server" ></asp:Label><asp:Label ID="add_pin" runat="server" ></asp:Label>
+                                                <br /><asp:Label ID="add_country" runat="server" ></asp:Label><br />
 										    </div>
                                         </div>
                                     </div>

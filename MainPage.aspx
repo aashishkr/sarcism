@@ -6,19 +6,19 @@
 
 <head runat="server">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content=""/>
+    <meta name="author" content="" />
 
     <title>SARC</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom CSS -->
-    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="css/grayscale.css" rel="stylesheet" />
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +39,7 @@
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <asp:button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <asp:button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse" >
                     <i class="fa fa-bars"></i>
                 </asp:button>
 
@@ -87,7 +87,7 @@
             </div>
         </div>
     </header>
-    <form action="profile.aspx" method="post" runat="server">
+    <form runat="server">
     <!-- About Section -->
     <section id="about" class="container content-section text-center">
         <div class="row">
@@ -97,9 +97,9 @@
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-shield fa-stack-1x text-primary"></i>
                 </span><br /><br />
-                    <asp:TextBox runat="server" id="username" type="email" placeholder="Username" CssClass="form-control" style="width:40%;margin-left:30%" /><br />
+                    <asp:TextBox runat="server" id="email" type="email" placeholder="Email" CssClass="form-control" style="width:40%;margin-left:30%" /><br />
                     <asp:TextBox runat="server" id="pass" type="password" placeholder="Password"  CssClass="form-control" style="width:40%;margin-left:30%" /><br /><br />
-                    <asp:TextBox runat="server" id="Login" type="submit" value="Login" CssClass="btn btn-default btn-lg" />
+                    <asp:Button runat="server" id="login" type="submit" Text="LOGIN" OnClick="btn_login" CssClass="btn btn-default btn-lg" />
                 <br /><br />
                 <a href="#download" class="btn btn-circle page-scroll">
                     <i class="fa fa-angle-double-down animated"></i>
@@ -107,7 +107,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Download Section -->
     <section id="download" class="content-section text-center">
         <div class="download-section">
@@ -122,21 +122,26 @@
                             <asp:TextBox runat="server" id="u_batch" type="text" class="form-control left" placeholder="Batch" style="width:40%;" />
                             <asp:TextBox runat="server" id="u_admin" type="text" class="form-control right" placeholder="Admission No" style="width:40%;" />
                             <br /><br />
-                            <asp:TextBox runat="server" style="float:left;margin-left:5%;font-size:18px;color:#fff;" type="radio" name="sex" value="1" />
-                            <label style="float:left;margin-left:2%;font-size:18px;color:#fff;">Female</label>
-                            <asp:TextBox runat="server" style="float:left;margin-left:5%;font-size:18px;color:#fff;" type="radio" name="sex" value="2" />
+                            <strong class="font-bold">
+                            <asp:RadioButtonList ID="u_gender" runat="server" RepeatDirection="Horizontal">
+                                <asp:ListItem Selected="True" style="margin-right:30px;font-size:16px;">Male</asp:ListItem>
+                                <asp:ListItem style="font-size:16px;">Female</asp:ListItem>
+                            </asp:RadioButtonList></strong>
+                            <!--<asp:TextBox runat="server"  type="radio" ID="m" name="sex" value="m" checked="checked" style="float:left;margin-left:5%;font-size:18px;color:#fff;" />
                             <label style="float:left;margin-left:2%;font-size:18px;color:#fff;">Male</label>
-                            <br /><br />
+                            <asp:TextBox runat="server" type="radio" ID="f" name="sex" value="f" style="float:left;margin-left:5%;font-size:18px;color:#fff;" />
+                            <label style="float:left;margin-left:2%;font-size:18px;color:#fff;">Female</label>-->
+                            
                             <asp:TextBox runat="server" id="u_email" type="text" class="form-control left" placeholder="Email" style="width:82%;" /><br /><br />
                             <asp:TextBox runat="server" id="u_password" type="password" class="form-control left" placeholder="Password" style="width:82%;" />
                             <br /><br />
-                            <asp:TextBox runat="server" id="u_mobile" type="text" class="form-control left" placeholder="Contact No" style="width:82%;" />
+                            <asp:TextBox runat="server" id="u_contact" type="text" class="form-control left" placeholder="Contact No" style="width:82%;" />
                             <br /><br />
                             <div class="checkbox left" style="margin-left:10%;color:#fff">
                                 <asp:TextBox runat="server" id="send_updates" type="checkbox" />
                                 <label for="send_updates">Send me occasional email updates</label>
-                            </div><br /><br /><br /><br />
-                            <asp:TextBox runat="server" id="SignUp" type="submit" value="Submit" class="btn btn-default btn-lg left" style="margin-left:25%" />
+                            </div><br /><br /><br />
+                            <asp:Button runat="server" id="SignUp" type="submit" Text="Submit" OnClick="btn_submit" CssClass="btn btn-default btn-lg left" style="margin-left:25%" />
                     </div> 
                 </div>
         </div>

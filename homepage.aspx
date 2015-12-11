@@ -6,7 +6,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Name</title>
+    <title ID="u_name"></title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet"/>
@@ -30,36 +30,30 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Deepak Kumar</strong>
-                             </span> <span class="text-muted text-xs block">Company<b class="caret"></b> </span> </span> </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="profile.html">Profile</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="mailbox.html">Mailbox</a></li>
-                                <li class="divider"></li>
-                                <li><a href="login.html">Logout</a></li>
-                            </ul>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
+                             </span> <span class="text-muted text-xs block">Company</span> </span> </a>
+                       
                     </div>
                     <div class="logo-element">
                         SARC
                     </div>
                 </li>
                 <li>
-                    <a href="homepage.aspx"><i class="fa "></i> <span class="nav-label">Home</span> </a>
+                    <a href="homepage.aspx" ><i class="fa "></i> <span class="nav-label">Home</span> </a>
                 </li>
                 <li>
-                    <a href="profile.aspx"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
+                    <a href="profile.aspx" onclick="view_btn"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
                 </li>
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
                 </li>
                 
                 <li class="">
-                    <a href=""><i class="fa "></i> <span class="nav-label">Query</span><span class="label label-primary pull-right">NEW</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa "></i> <span class="nav-label">Query</span><span class="label label-primary pull-right">NEW</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="">My Queries</a></li>
-                        <li ><a href="">All Queries</a></li>
-                        <li><a href="">Ask a Query</a></li>
+                        <li><a href="My.aspx">My Queries</a></li>
+                        <li ><a href="All.aspx">All Queries</a></li>
+                        <li><a href="Ask.aspx">Ask a Query</a></li>
                     </ul>
                 </li>
                
@@ -77,106 +71,9 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
+                </li>                
                 <li>
-                    <a href="login.html">
+                    <a href="MainPage.aspx">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
@@ -185,9 +82,68 @@
         </nav>
         </div>
         
-     <!--   <div class="row  border-bottom white-bg dashboard-header">
-            <div class="col-sm-3">-->
-
+        <div class="row  border-bottom white-bg dashboard-header">
+                    <div class="col-sm-3">
+                        <h2>Welcome <asp:Label runat="server" ID="user_name1" ></asp:Label></h2>
+                    </div>
+                    <center>
+                        <div class="col-lg-10">
+                            <form action="#" method="post" runat="server">
+                            <asp:TextBox runat="server"  type="text" placeholder="What's on your mind..." CssClass="form-control" style="width:100%;height:80px;margin-left:0%;"/><br />
+                            <div class="pull-right text-right">
+                                <asp:Button runat="server" ID="Submit" CssClass="btn btn-default btn-lg" Font-Size="Small" BorderColor="#99ccff"  Text="Submit"/>
+                            </div>
+                            </form>
+                        </div>
+                    </center>
+            </div>
+            <br /><br /><br />
+            <h1>
+            <center>No Posts Yet.</center></h1>
+        <!--<div class="row">
+            <div class="col-lg-12">
+                
+                <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Heading1</h5> <span class="label label-primary">IN+</span>
+                                </div>
+                                <div class="ibox-content">
+                                    <div>
+                                        <div class="pull-right text-right">
+                                            <br/>
+                                            <small class="font-bold">vdfdasf</small>
+                                        </div>
+                                        <h4>nbdjkskjmbhsdjdjsdbfiusncbid<br />juyskbic<br />jhdg dvydvdc hjdndgdhd dfjcbbiuh<br />hjcgsndcbcjsdkcndbc
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Heading4</h5> <span class="label label-primary">IN+</span>
+                                </div>
+                                <div class="ibox-content">
+                                    <div>
+                                        <div class="pull-right text-right">
+                                            <br/>
+                                            <small class="font-bold">vdfdasf</small>
+                                        </div>
+                                        <h4>nbdjkskjmbhsdjdjsdbfiusncbid<br />juyskbic<br />jhdg dvydvdc hjdndgdhd dfjcbbiuh<br />hjcgsndcbcjsdkcndbc
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        </div></div>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>

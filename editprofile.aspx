@@ -24,12 +24,12 @@
 </head>
 <body>
     <form runat="server">
-    <div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
+        <div id="wrapper">
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -43,56 +43,45 @@
                                 <li><a href="login.html">Logout</a></li>
                             </ul>
                     </div>
-                    <div class="logo-element">
-                        SARC
-                    </div>
-                </li>
-                <li>
-                    <a href="homepage.aspx"><i class="fa "></i> <span class="nav-label">Home</span> </a>
-                </li>
-                <li>
-                    <a href="profile.aspx"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
-                </li>
-                <li>
-                    <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
-                </li>
-                
-                <li class="">
-                    <a href=""><i class="fa "></i> <span class="nav-label">Query</span><span class="label label-primary pull-right">NEW</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="My.aspx">My Queries</a></li>
-                        <li ><a href="All.aspx">All Queries</a></li>
-                        <li><a href="Ask.aspx">Ask a Query</a></li>
+                                <div class="logo-element">
+                                    SARC
+                                </div>
+                        </li>
+                        <li>
+                            <a href="homepage.aspx"><i class="fa "></i> <span class="nav-label">Home</span> </a>
+                        </li>
+                        <li>
+                            <a href="profile.aspx"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
+                        </li>
+                        <li>
+                            <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
+                        </li>
                     </ul>
-                </li>
-               
-            </ul>
-        </div>
-    </nav>
-
-        <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                 </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                           <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
-                    </li>
-                    <li>
-                        <a href="MainPage.aspx">
-                            <i class="fa fa-sign-out"></i> Log out
-                        </a>
-                    </li>
-                </ul>
-                </nav>
+            </nav>
+
+            <div id="page-wrapper" class="gray-bg dashbard-1">
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
+                            </li>
+                            <li>
+                                <a href="MainPage.aspx">
+                                    <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-        <!-- Main content -->
+            <div class="wrapper row-offcanvas row-offcanvas-left">
                 <section class="content">
-                    <div class="flash-data"></div>
                         <div class="row">
                             <div class="box box-primary box-solid"  >
                                 <div class="box-header" >
@@ -100,17 +89,19 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
-                                        <div class="form-group col-md-3 col-lg-3">
-                                            <asp:TextBox runat="server" ID="user_name1" class="form-control"  placeholder="First Name" />
-                                            <p class="help-block"></p>
+                                        <div class="form-group col-md-3">
+                                            <label>First Name</label>
+                                                <asp:TextBox runat="server" ID="user_name1" class="form-control" />
+                                                <p class="help-block"></p>
                                         </div>
-                                        <div class="form-group col-md-3 col-lg-3"  >
-                                            <asp:TextBox runat="server" ID="user_name2" class="form-control"  placeholder="Last Name"  />
+                                        <div class="form-group col-md-3" >
+                                            <label>Last Name</label>
+                                                <asp:TextBox runat="server" ID="user_name2" class="form-control" />
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
                                     <div class="row"  >
-                                        <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
+                                        <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3" >
                                             <label>Gender</label>
                                             <asp:RadioButtonList ID="user_gender" runat="server" RepeatDirection="Vertical">
                                                 <asp:ListItem>Male</asp:ListItem>
@@ -122,77 +113,97 @@
                                             <asp:TextBox runat="server" ID="user_dob" CssClass="form-control" placeholder="dd/mm/yyyy" ></asp:TextBox>
                                             <p class="help-block"></p>
                                         </div>
-        <div class="form-group col-md-3 col-lg-3">           
-            <asp:Label runat="server" class="control-label">Email</asp:Label>
-            <asp:TextBox runat="server" ID="user_email" class="form-control" type="email" required="required" placeholder="Email"  />
-            <p class="help-block"></p>
-        </div>
-        <div class="form-group col-md-3 col-lg-3">
-            <asp:Label runat="server" class="control-label">Mobile No.</asp:Label>
-            <asp:TextBox runat="server" ID="user_contact" class="form-control"  required="required" placeholder="Contact" />
-            <p class="help-block"></p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-3 col-lg-3">
-            <asp:Label runat="server" class="control-label">Father's Name</asp:Label>
-            <asp:TextBox runat="server" ID="user_father" class="form-control" placeholder="Father's Name" />
-            <p class="help-block"></p>
-        </div>
-        <div class="form-group col-md-3 col-lg-3">
-            <asp:Label runat="server" class="control-label">Mother's Name</asp:Label>
-            <asp:TextBox runat="server" ID="user_mother" class="form-control" placeholder="Mother's Name" />
-            <p class="help-block"></p>
-        </div>
-    </div>
-        <div class="box box-primary box-solid">
-            <div class="box-body">
-                <div class="row"  >
-                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                        <div class="box box-primary box-solid col-md-8 col-lg-8" >
-                            <div class="box-header" >
-                                <h3 class="box-title">Present Address</h3>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3">           
+                                    <asp:Label runat="server" class="control-label">Email</asp:Label>
+                                    <asp:TextBox runat="server" ID="user_email" class="form-control" type="email" required="required" placeholder="Email"  />
+                                    <p class="help-block"></p>
+                                </div>
+                                <div class="form-group col-md-3 col-lg-3">
+                                    <asp:Label runat="server" class="control-label">Contact No.</asp:Label>
+                                    <asp:TextBox runat="server" ID="user_contact" class="form-control"  required="required" placeholder="Contact" />
+                                    <p class="help-block"></p>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-3 col-lg-3">
+                                        <asp:Label runat="server" class="control-label">Father's Name</asp:Label>
+                                        <asp:TextBox runat="server" ID="user_father" class="form-control" placeholder="Father's Name" />
+                                        <p class="help-block"></p>
+                                    </div>
+                                    <div class="form-group col-md-3 col-lg-3">
+                                        <asp:Label runat="server" class="control-label">Mother's Name</asp:Label>
+                                        <asp:TextBox runat="server" ID="user_mother" class="form-control" placeholder="Mother's Name" />
+                                        <p class="help-block"></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <asp:TextBox runat="server" ID="add_l1" placeholder="Address Line 1" class="form-control" AutoPostBack="true"  />
-                                    <p class="help-block"></p>
-                                </div>
-                                <div class="form-group"  >
-                                    <asp:TextBox runat="server" ID="add_l2" placeholder="Addres Line 2" class="form-control" />
-                                    <p class="help-block"></p>
-                                </div>
-                                <div class="form-group">
-                                    <asp:TextBox runat="server" ID="add_city" placeholder="City" class="form-control" />
-                                    <p class="help-block"></p>
-                                </div>
-                                <div class="form-group">
-                                    <asp:TextBox runat="server" ID="add_state" placeholder="State" class="form-control"  />
-                                    <p class="help-block"></p>
-                                </div>
-                                <div class="form-group">
-                                    <asp:TextBox runat="server" ID="add_pin" placeholder="Pincode" class="form-control" />
-                                    <p class="help-block"></p>
-                                </div>
-                                <div class="form-group"  >
-                                    <asp:TextBox runat="server" ID="add_country" placeholder="Country" class="form-control" />
-                                    <p class="help-block"></p>
+                        
+                            <div class="box box-primary box-solid">
+                                <div class="box-body">
+                                    <div class="row"  >
+                                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                            <div class="box box-primary box-solid col-md-8 col-lg-8" >
+                                                <div class="box-header" >
+                                                    <h3 class="box-title">Present Address</h3>
+                                                </div>
+                                                    <div class="box-body">
+                                                        <div class="form-group">
+                                                            <asp:TextBox runat="server" ID="add_l1" placeholder="Address Line 1" class="form-control" AutoPostBack="true"  />
+                                                        <p class="help-block"></p>
+                                                        </div>
+                                                        <div class="form-group"  >
+                                                            <asp:TextBox runat="server" ID="add_l2" placeholder="Addres Line 2" class="form-control" />
+                                                            <p class="help-block"></p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <asp:TextBox runat="server" ID="add_city" placeholder="City" class="form-control" />
+                                                            <p class="help-block"></p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <asp:TextBox runat="server" ID="add_state" placeholder="State" class="form-control"  />
+                                                            <p class="help-block"></p>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <asp:TextBox runat="server" ID="add_pin" placeholder="Pincode" class="form-control" />
+                                                            <p class="help-block"></p>
+                                                        </div>
+                                                        <div class="form-group"  >
+                                                            <asp:TextBox runat="server" ID="add_country" placeholder="Country" class="form-control" />
+                                                            <p class="help-block"></p>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    <div class="row">
+                        <div class="box box-primary box-solid">
+                            <div class="box-header">
+                                <h3 class="box-title">Work Experience</h3>
+                            </div>
+        
+                            <div class="table-responsive">
+                                <asp:Panel runat="server" ID="workExperience">                
+                                </asp:Panel>
+                                <asp:Button ID="addMoreRows" runat="server" Text="Add More Rows" OnClick="addMoreRows_Click" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
+                </section>
+        </div>
+
+            <div class="row">
+                <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5"></div>
+                    <asp:Button runat="server" ID="submit" Text="Submit" class=" btn btn-primary" OnClick="btn_submit" type="submit"></asp:Button>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="box box-primary box-solid">
-                <div class="box-header">
-                    <h3 class="box-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Work Experience</h3>
-                </div>
-           
-    <div>
-        <div>
-    
+    </form>
+        
+         <!--
         <asp:gridview ID="qualification" runat="server" ShowFooter="true" AutoGenerateColumns="false">
             <Columns>
             <asp:BoundField DataField="qualificationId" HeaderText="S. No." />
@@ -217,32 +228,13 @@
                 </ItemTemplate>
                 <FooterStyle HorizontalAlign="Right" />
                 <FooterTemplate>
-                 <asp:Button ID="ButtonAdd" runat="server" Text="Add More" 
-                        onclick="ButtonAdd_Click" />
+                
                 </FooterTemplate>
             </asp:TemplateField>
             </Columns>
-        </asp:gridview>
-    </div>
-    </div>
-   
-                </div>
-                </div>
-            </div>
-		</div></div>
-            </section>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 col-sm-12 col-xs-12 col-lg-5"></div><br /><br />
-                <centre><asp:Button runat="server" ID="submit" Text="Submit" class=" btn btn-primary" OnClick="btn_submit" type="submit"></asp:Button></centre>
-                
-        </div>
-            <!-- /.content -->
-</div>
-  
+        </asp:gridview> -->
+    
 
-        </form>
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>

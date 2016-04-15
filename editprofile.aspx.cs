@@ -95,15 +95,24 @@ public partial class EDIT : System.Web.UI.Page
             }
         }
     }
-  
-    protected void ButtonAdd_Click(object sender, EventArgs e)
+    private static void AddInitialRows()
+    {
+
+    }
+    protected void addMoreRows_Click(object sender, EventArgs e)
     {
         AddNewRowToGrid();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session.Count.Equals(null))
+        {
+            Response.Redirect("MainPage.aspx");
+        }
+
         if (!Page.IsPostBack)
         {
+            AddInitialRows();
             SetInitialRow();
         }
 

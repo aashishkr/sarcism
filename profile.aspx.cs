@@ -14,7 +14,10 @@ public partial class _Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session.Count.Equals(null))
+        {
             Response.Redirect("MainPage.aspx");
+        }
+
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             using (MySqlCommand sample = new MySqlCommand())
@@ -44,7 +47,6 @@ public partial class _Default : System.Web.UI.Page
                     add_pin.Text = reader["AddPin"].ToString();
                     add_country.Text = reader["AddCountry"].ToString();
                 }
-
                 conn.Close();
             }
         }

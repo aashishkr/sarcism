@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 public partial class MainPage : System.Web.UI.Page
 {
@@ -37,7 +32,6 @@ public partial class MainPage : System.Web.UI.Page
                 conn.Open();
                 sample.ExecuteNonQuery();
                 Session.Add("email", u_email.Text);
-                string s = (string)Session["email"];
                 Response.Redirect("homepage.aspx");
                 conn.Close();
                 
@@ -51,20 +45,18 @@ public partial class MainPage : System.Web.UI.Page
             using (MySqlCommand cmd = new MySqlCommand())
             {
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select EmailId, Password FROM data WHERE EmailId=@EmailId and Password=@Password";
+                cmd.CommandText = "SELECT EmailId, Password FROM data WHERE EmailId = @EmailId and Password = @Password";
                 cmd.Connection = conn;
 
                 cmd.Parameters.AddWithValue("@EmailId", email.Text);
                 cmd.Parameters.AddWithValue("@Password", pass.Text);
 
                 conn.Open();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                if (dt.Rows.Count > 0)
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
                 {
-                    Session.Add("email", email.Text);
-                    string s = (string)Session["email"];
+                    Session.Add("email", reader["EmailId"].ToString());
                     Response.Redirect("homepage.aspx");
                 }
                 else

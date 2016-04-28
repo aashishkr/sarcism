@@ -21,7 +21,8 @@
     <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="wrapper">
+    <form runat="server">
+        <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
@@ -71,25 +72,43 @@
 
         </nav>
         </div>
-        
-        <div class="row  border-bottom white-bg dashboard-header">
+        <asp:ScriptManager runat="server" EnablePartialRendering="true" />
+        <div class="row  border-bottom white-bg dashboard-header ">
                     <div class="col-sm-3">
                         <h2>Welcome <asp:Label runat="server" ID="user_name1" ></asp:Label></h2>
                     </div>
-                    <center>
                         <div class="col-lg-10">
-                            <form action="#" method="post" runat="server">
-                            <asp:TextBox runat="server"  type="text" placeholder="What's on your mind..." CssClass="form-control" style="width:100%;height:80px;margin-left:0%;"/><br />
-                            <div class="pull-right text-right">
-                                <asp:Button runat="server" ID="Submit" CssClass="btn btn-default btn-lg" Font-Size="Small" BorderColor="#99ccff"  Text="Submit"/>
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <asp:Textbox runat="server"  type="text" placeholder="What's on your mind..." CssClass="form-control" TextMode="MultiLine" ID="NewFeed"/><br />
+                                    <div class="pull-right text-right">
+                                        <asp:Button runat="server" ID="SubmitPost" CssClass="btn btn-default btn-lg" Text="Post" OnClick="SubmitPost_Click"/>
+                                    </div>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="SubmitPost" EventName="Click" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                            
                             </div>
-                            </form>
                         </div>
-                    </center>
+            <br />
+            <div class="feed-activity-list">
+                <asp:UpdatePanel runat="server" ID="feedsPanel" UpdateMode="Conditional">
+                    <ContentTemplate>
+
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="SubmitPost" EventName="Click" />
+                    </Triggers>
+            </asp:UpdatePanel>
             </div>
-            <br /><br /><br />
-            <h1>
-            <center>No Posts Yet.</center></h1>
+
+            </div>
+            <br /><br />
+            
+            
+            
         <!--<div class="row">
             <div class="col-lg-12">
                 
@@ -134,6 +153,8 @@
             </div>
         </div>-->
         </div></div>
+    </form>
+    
 
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>

@@ -32,6 +32,7 @@ public partial class MainPage : System.Web.UI.Page
                 conn.Open();
                 sample.ExecuteNonQuery();
                 Session.Add("email", u_email.Text);
+                Session.Add("FullName", u_name1.Text + " " + u_name2.Text);
                 Response.Redirect("homepage.aspx");
                 conn.Close();
                 
@@ -45,7 +46,7 @@ public partial class MainPage : System.Web.UI.Page
             using (MySqlCommand cmd = new MySqlCommand())
             {
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT EmailId, Password FROM data WHERE EmailId = @EmailId and Password = @Password";
+                cmd.CommandText = "SELECT EmailId, Password, FirstName, LastName FROM data WHERE EmailId = @EmailId and Password = @Password";
                 cmd.Connection = conn;
 
                 cmd.Parameters.AddWithValue("@EmailId", email.Text);
@@ -57,6 +58,7 @@ public partial class MainPage : System.Web.UI.Page
                 if(reader.Read())
                 {
                     Session.Add("email", reader["EmailId"].ToString());
+                    Session.Add("FullName", reader["FirstName"].ToString() + " " + reader["LastName"].ToString());
                     Response.Redirect("homepage.aspx");
                 }
                 else

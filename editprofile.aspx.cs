@@ -237,10 +237,10 @@ public partial class EDIT : System.Web.UI.Page
                         user_mother.Text = reader["MotherName"].ToString();
                         add_l1.Text = reader["AddLine1"].ToString();
                         add_l2.Text = reader["AddLine2"].ToString();
-                        add_city.Text = reader["AddCity"].ToString();
-                        add_state.Text = reader["AddState"].ToString();
-                        add_pin.Text = reader["AddPin"].ToString();
-                        add_country.Text = reader["AddCountry"].ToString();
+                        add_city.Text = reader["City"].ToString();
+                        add_state.Text = reader["State"].ToString();
+                        add_pin.Text = reader["Pin"].ToString();
+                        add_country.Text = reader["Country"].ToString();
 
                         conn.Close();
                     }

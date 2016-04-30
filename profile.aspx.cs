@@ -7,7 +7,7 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session.Count.Equals(null))
+        if (Session.Count == 0)
         {
             Response.Redirect("MainPage.aspx");
         }

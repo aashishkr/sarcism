@@ -33,7 +33,7 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
-                             </span> <span class="text-muted text-xs block">Company </span> </span> </a>
+                             </span> </span> </a>
                     </div>
                     <div class="logo-element">
                         SARC
@@ -48,16 +48,6 @@
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
                 </li>
-                
-                <li class="">
-                    <a href=""><i class="fa "></i> <span class="nav-label">Query</span><span class="label label-primary pull-right">NEW</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="My.aspx">My Queries</a></li>
-                        <li ><a href="All.aspx">All Queries</a></li>
-                        <li><a href="Ask.aspx">Ask a Query</a></li>
-                    </ul>
-                </li>
-               
             </ul>
 
         </div>
@@ -193,6 +183,8 @@
                             </div></div></div></div>
             </section><!-- /.content -->
         </div><!-- ./wrapper -->
+        </div>
+    </div>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>

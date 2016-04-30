@@ -30,9 +30,9 @@
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <a href="profile.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
-                             </span> <span class="text-muted text-xs block">Company</span> </span> </a>
+                             </span> </span> </a>
                        
                     </div>
                     <div class="logo-element">
@@ -82,7 +82,7 @@
                                 <ContentTemplate>
                                     <asp:Textbox runat="server"  type="text" placeholder="What's on your mind..." CssClass="form-control" TextMode="MultiLine" ID="NewFeed"/><br />
                                     <div class="pull-right text-right">
-                                        <asp:Button runat="server" ID="SubmitPost" CssClass="btn btn-default btn-lg" Text="Post" OnClick="SubmitPost_Click"/>
+                                        <asp:Button runat="server" ID="SubmitPost" CssClass="btn btn-outline btn-primary btn-block" Text="Post" OnClick="SubmitPost_Click"/>
                                     </div>
                                 </ContentTemplate>
                                 <Triggers>

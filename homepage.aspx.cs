@@ -39,13 +39,13 @@ public partial class profile : System.Web.UI.Page
             {
                 getAllFeeds.CommandType = CommandType.Text;
                 getAllFeeds.Connection = conn;
-                getAllFeeds.CommandText = "SELECT FeedText, ImageLink, TimeStamp FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
+                getAllFeeds.CommandText = "SELECT FirstName, LastName, FeedText, ImageLink, TimeStamp FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
 
                 conn.Open();
                 MySqlDataReader reader = getAllFeeds.ExecuteReader();
                 while(reader.Read())
                 {
-                    AddFeedToPage(Session["FullName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
+                    AddFeedToPage(reader["FirstName"] + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
                 }
             }
         }
@@ -98,7 +98,7 @@ public partial class profile : System.Web.UI.Page
         feedElement.CssClass = "feed-element";
         feedText.CssClass = "well";
         commentButtonPanel.CssClass = "pull-right";
-        commentButton.CssClass = "btn btn-primary-outline btn-sm";
+        commentButton.CssClass = "btn btn-primary btn-outline btn-sm pull-right";
 
         strongTag.InnerText = FullName;
         postOwnerImage.ImageUrl = imageLink;

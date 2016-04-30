@@ -5,6 +5,11 @@ using System.Web.UI.HtmlControls;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Newtonsoft.Json;
+using System.Web.Services;
+using System.Web;
+using System.Collections.Generic;
+
 public partial class EDIT : System.Web.UI.Page
 {
     static int counter = 1;
@@ -116,51 +121,13 @@ public partial class EDIT : System.Web.UI.Page
                 MySqlDataReader reader = getQualification.ExecuteReader();
                 while(reader.Read())
                 {
-                    HtmlGenericControl tr = new HtmlGenericControl("tr");
-                    HtmlGenericControl serialNumber = new HtmlGenericControl("td");
-                    HtmlGenericControl companyTh = new HtmlGenericControl("td");
-                    HtmlGenericControl company = new HtmlGenericControl("input");
-                    HtmlGenericControl positionTh = new HtmlGenericControl("td");
-                    HtmlGenericControl position = new HtmlGenericControl("input");
-                    HtmlGenericControl fromYearTh = new HtmlGenericControl("td");
-                    HtmlGenericControl fromYear = new HtmlGenericControl("input");
-                    HtmlGenericControl toYearTh = new HtmlGenericControl("td");
-                    HtmlGenericControl toYear = new HtmlGenericControl("input");
-
-                    workExperiencePanel.Controls.Add(tr);
-                    tr.Controls.Add(serialNumber);
-                    tr.Controls.Add(companyTh);
-                    tr.Controls.Add(positionTh);
-                    tr.Controls.Add(fromYearTh);
-                    tr.Controls.Add(toYearTh);
-                    companyTh.Controls.Add(company);
-                    positionTh.Controls.Add(position);
-                    fromYearTh.Controls.Add(fromYear);
-                    toYearTh.Controls.Add(toYear);
-
-                    company.ID = "company" + counter.ToString();
-                    company.Attributes.Add("class", "form-control");
-                    position.ID = "position" + counter.ToString();
-                    position.Attributes.Add("class", "form-control");
-                    fromYear.ID = "fromYear" + counter.ToString();
-                    fromYear.Attributes.Add("class", "form-control");
-                    toYear.ID = "toYear" + counter.ToString();
-                    toYear.Attributes.Add("class", "form-control");
-
-
-                    serialNumber.InnerText = counter.ToString();
-                    company.Attributes.Add("value", reader["Company"].ToString());
-                    position.Attributes.Add("value", reader["position"].ToString());
-                    fromYear.Attributes.Add("value", reader["fromDate"].ToString());
-                    toYear.Attributes.Add("value", reader["toDate"].ToString());
-
-                    counter++;
+                    addDataToNewRow(workExperiencePanel, reader["Company"].ToString(), reader["Position"].ToString(), reader["fromDate"].ToString(), reader["toDate"].ToString());
                 }
             }
         }
     }
 
-    protected void addMoreRows_Click(object sender, EventArgs e)
+    private static void addDataToNewRow(Panel workExperiencePanel, string Company, string Position, string FromDate, string ToDate)
     {
         HtmlGenericControl tr = new HtmlGenericControl("tr");
         HtmlGenericControl serialNumber = new HtmlGenericControl("td");
@@ -173,7 +140,58 @@ public partial class EDIT : System.Web.UI.Page
         HtmlGenericControl toYearTh = new HtmlGenericControl("td");
         HtmlGenericControl toYear = new HtmlGenericControl("input");
 
-        addMoreRowsPanel.ContentTemplateContainer.Controls.Add(tr);
+        workExperiencePanel.Controls.Add(tr);
+        tr.Controls.Add(serialNumber);
+        tr.Controls.Add(companyTh);
+        tr.Controls.Add(positionTh);
+        tr.Controls.Add(fromYearTh);
+        tr.Controls.Add(toYearTh);
+        companyTh.Controls.Add(company);
+        positionTh.Controls.Add(position);
+        fromYearTh.Controls.Add(fromYear);
+        toYearTh.Controls.Add(toYear);
+
+        company.ID = "company" + counter.ToString();
+        company.Attributes.Add("class", "form-control");
+        position.ID = "position" + counter.ToString();
+        position.Attributes.Add("class", "form-control");
+        fromYear.ID = "fromYear" + counter.ToString();
+        fromYear.Attributes.Add("class", "form-control");
+        toYear.ID = "toYear" + counter.ToString();
+        toYear.Attributes.Add("class", "form-control");
+
+
+        serialNumber.InnerText = counter.ToString();
+        company.Attributes.Add("value", Company);
+        position.Attributes.Add("value", Position);
+        fromYear.Attributes.Add("value", FromDate);
+        toYear.Attributes.Add("value", ToDate);
+
+        counter++;
+    }
+        
+    public void AddWorkExperience(string[][] data)
+    {
+        
+    }
+
+    protected void addMoreRows_Click(object sender, EventArgs e)
+    {
+        addDataToNewRow(workExperiencePanel, null, null, null, null);
+        extraRowsCounter++;
+        /*
+        HtmlGenericControl tr = new HtmlGenericControl("tr");
+        HtmlGenericControl serialNumber = new HtmlGenericControl("td");
+        HtmlGenericControl companyTh = new HtmlGenericControl("td");
+        HtmlGenericControl company = new HtmlGenericControl("input");
+        HtmlGenericControl positionTh = new HtmlGenericControl("td");
+        HtmlGenericControl position = new HtmlGenericControl("input");
+        HtmlGenericControl fromYearTh = new HtmlGenericControl("td");
+        HtmlGenericControl fromYear = new HtmlGenericControl("input");
+        HtmlGenericControl toYearTh = new HtmlGenericControl("td");
+        HtmlGenericControl toYear = new HtmlGenericControl("input");
+
+        workExperiencePanel.ContentTemplateContainer.Controls.Add(tr);
         tr.Controls.Add(serialNumber);
         tr.Controls.Add(companyTh);
         tr.Controls.Add(positionTh);
@@ -195,10 +213,46 @@ public partial class EDIT : System.Web.UI.Page
 
         serialNumber.InnerText = (counter + extraRowsCounter).ToString();
         extraRowsCounter++;
+        */
     }
     protected void btn_submit(object sender, EventArgs e)
     {
 
+    }
+
+    
+
+    [WebMethod]
+    public static List<string[]> GetExperienceData()
+    {
+        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
+        {
+            List<string[]> workExperienceArray = new List<string[]>();
+            
+            using (MySqlCommand getQualification = new MySqlCommand())
+            {
+                getQualification.CommandType = CommandType.Text;
+                getQualification.Connection = conn;
+                getQualification.CommandText = "Select * from qualification WHERE EmailID = @EmailId";
+
+                getQualification.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
+
+                conn.Open();
+                MySqlDataReader reader = getQualification.ExecuteReader();
+                while (reader.Read())
+                {
+                    string[] temp = new string[4];
+                    temp[0] = reader["Company"].ToString();
+                    temp[1] = reader["Position"].ToString();
+                    temp[2] = reader["fromDate"].ToString();
+                    temp[3] = reader["toDate"].ToString();
+                    workExperienceArray.Add(temp);
+                }
+                conn.Close();
+            }
+            return workExperienceArray;
+            
+        }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -211,7 +265,7 @@ public partial class EDIT : System.Web.UI.Page
         {
             counter = 1;
             extraRowsCounter = 0;
-            AddInitialRows(Session["email"].ToString(), workExperiencePanel);
+       //     AddInitialRows(Session["email"].ToString(), workExperiencePanel);
 
             using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
             {

@@ -96,23 +96,23 @@
                                         </div>
                                     </div>
                                     <div class="row"  >
-                                        <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >
-                                            <label>Gender</label>
-                                            <asp:RadioButtonList ID="user_gender" runat="server" RepeatDirection="Vertical">
+                                        <div class="col-md-3 col-sm-12 col-lg-3"  >
+                                            Gender <br />
+                                            <asp:DropDownList runat="server" CssClass="form-control" ID="user_gender">
                                                 <asp:ListItem>Male</asp:ListItem>
                                                 <asp:ListItem>Female</asp:ListItem>
-                                            </asp:RadioButtonList>
+                                            </asp:DropDownList>
                                         </div>
                                         <div class="form-group col-md-3 col-lg-3" data-date-format="dd-mm-yyyy" >
                                             <asp:Label runat="server" class="control-label">Date of Birth</asp:Label>
                                             <asp:TextBox runat="server" ID="user_dob" CssClass="form-control" placeholder="dd/mm/yyyy" ></asp:TextBox>
                                             <p class="help-block"></p>
                                         </div>
-        <div class="form-group col-md-3 col-lg-3">           
+  <!--      <div class="form-group col-md-3 col-lg-3">           
             <asp:Label runat="server" class="control-label">Email</asp:Label>
             <asp:TextBox runat="server" ID="user_email" class="form-control" type="email" required="required" placeholder="Email"  />
             <p class="help-block"></p>
-        </div>
+        </div> -->
         <div class="form-group col-md-3 col-lg-3">
             <asp:Label runat="server" class="control-label">Mobile No.</asp:Label>
             <asp:TextBox runat="server" ID="user_contact" class="form-control"  required="required" placeholder="Contact" />
@@ -145,7 +145,7 @@
                                     <p class="help-block"></p>
                                 </div>
                                 <div class="form-group"  >
-                                    <asp:TextBox runat="server" ID="add_l2" placeholder="Addres Line 2" class="form-control" />
+                                    <asp:TextBox runat="server" ID="add_l2" placeholder="Address Line 2" class="form-control" />
                                     <p class="help-block"></p>
                                 </div>
                                 <div class="form-group">
@@ -170,7 +170,7 @@
                 </div>
             </div>
         </div>
-        <asp:ScriptManager runat="server" EnablePartialRendering="true"/>
+        <asp:ScriptManager runat="server" EnablePartialRendering="true" EnablePageMethods="true"/>
         <div class="container-fluid">
             <div class="row">
                 <div class="box box-primary box-solid">
@@ -199,6 +199,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <input type="button" onclick="addEmptyRow()" class="btn btn-default" name="Add New Row" value="Add New Row" />
+                        <input type="button" onclick="deleteEmptyRow()" class="btn btn-default" name="Delete Last Row" value="Delete Last Row" />
                         
                     </div>
                 </div>
@@ -224,8 +225,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="center-orientation">
-                        <asp:Button runat="server" ID="submit" Text="Submit" class=" btn btn-primary" OnClick="btn_submit" type="submit"></asp:Button></>
-                    </div>
+                        <input type="button" class="btn btn-primary" name="Submit" value="Submit" onclick="sendEntireData()" />
+              </div>
             </div>
             </div>
             
@@ -279,6 +280,60 @@
 
     <script>
         window.onload = populateTable;
+        
+        function deleteEmptyRow()
+        {
+            var table = document.getElementById("workExperienceTable");
+            var length = table.rows.length;
+            table.deleteRow(length - 1);
+        }
+
+        function sendEntireData()
+        {
+            var table = document.getElementById("workExperienceTable");
+            var tableArray = [];
+
+            for(var i = 1; i < table.rows.length; i++)
+            {
+                var tempArray = [];
+                for(var j = 1; j < table.rows[i].cells.length; j++)
+                {
+                    tempArray.push(table.rows[i].cells[j].children[0].value);
+                }
+                tableArray.push(tempArray);
+            }
+            
+            var userDetails = {};
+
+            userDetails.firstName = document.getElementById("user_name1").value;
+            userDetails.lastName = document.getElementById("user_name2").value;
+            userDetails.gender = document.getElementById("user_gender").options[document.getElementById("user_gender").selectedIndex].text;
+            userDetails.dateOfBirth = document.getElementById("user_dob").value;
+            userDetails.mobileNo = document.getElementById("user_contact").value;
+            userDetails.fatherName = document.getElementById("user_father").value;
+            userDetails.motherName = document.getElementById("user_mother").value;
+            userDetails.addressLine1 = document.getElementById("add_l1").value;
+            userDetails.addressLine2 = document.getElementById("add_l2").value;
+            userDetails.city = document.getElementById("add_city").value;
+            userDetails.state = document.getElementById("add_state").value;
+            userDetails.pincode = document.getElementById("add_pin").value;
+            userDetails.country = document.getElementById("add_country").value; 
+            userDetails.workExperienceArray = tableArray;
+            
+            $.ajax({
+                type: "POST",
+                url: "editprofile.aspx/UpdateDetails",
+                contentType: "application/json",
+                data: JSON.stringify(userDetails),
+                success: function (response) {
+                    alert("Data saved successfully");
+                },
+                failure: function (response) {
+                    alert("Data could not be saved, try again later");
+                }
+            }); 
+        }
+        
         function retrieveData()
         {
             var workExperienceTable = document.getElementById("workExperienceTable");

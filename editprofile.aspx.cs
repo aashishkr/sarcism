@@ -9,218 +9,80 @@ using Newtonsoft.Json;
 using System.Web.Services;
 using System.Web;
 using System.Collections.Generic;
+using System.Web.Script.Services;
 
 public partial class EDIT : System.Web.UI.Page
 {
-    static int counter = 1;
-    static int extraRowsCounter = 0;
-    /*
-    private void SetInitialRow()
-    {
-        DataTable dt = new DataTable();
-        DataRow dr = null;
-        dt.Columns.Add(new DataColumn("qualificationId", typeof(int)));
-        dt.Columns.Add(new DataColumn("company", typeof(string)));
-        dt.Columns.Add(new DataColumn("position", typeof(string)));
-        dt.Columns.Add(new DataColumn("from", typeof(string)));
-        dt.Columns.Add(new DataColumn("to", typeof(string)));
-        dr = dt.NewRow();
-        dr["qualificationId"] = 1;
-        dr["company"] = string.Empty;
-        dr["position"] = string.Empty;
-        dr["from"] = string.Empty;
-        dr["to"] = string.Empty;
-        dt.Rows.Add(dr);
-
-        //Store the DataTable in ViewState
-        ViewState["CurrentTable"] = dt;
-
-        qualification.DataSource = dt;
-        qualification.DataBind();
-    }
     
-    private void AddNewRowToGrid()
-    {
-        int rowIndex = 0;
-
-        if (ViewState["CurrentTable"] != null)
-        {
-            DataTable dtCurrentTable = (DataTable)ViewState["CurrentTable"];
-            DataRow drCurrentRow = null;
-            if (dtCurrentTable.Rows.Count > 0)
-            {
-                for (int i = 1; i <= dtCurrentTable.Rows.Count; i++)
-                {
-                    //extract the TextBox values
-                    TextBox box1 = (TextBox)qualification.Rows[rowIndex].Cells[1].FindControl("company");
-                    TextBox box2 = (TextBox)qualification.Rows[rowIndex].Cells[2].FindControl("position");
-                    TextBox box3 = (TextBox)qualification.Rows[rowIndex].Cells[3].FindControl("from");
-                    TextBox box4 = (TextBox)qualification.Rows[rowIndex].Cells[4].FindControl("to");
-                    drCurrentRow = dtCurrentTable.NewRow();
-                    drCurrentRow["qualificationId"] = i + 1;
-
-                    dtCurrentTable.Rows[i - 1]["company"] = box1.Text;
-                    dtCurrentTable.Rows[i - 1]["position"] = box2.Text;
-                    dtCurrentTable.Rows[i - 1]["from"] = box3.Text;
-                    dtCurrentTable.Rows[i - 1]["to"] = box4.Text;
-
-                    rowIndex++;
-                }
-                dtCurrentTable.Rows.Add(drCurrentRow);
-                ViewState["CurrentTable"] = dtCurrentTable;
-
-                qualification.DataSource = dtCurrentTable;
-                qualification.DataBind();
-            }
-        }
-        else
-        {
-            Response.Write("ViewState is null");
-        }
-
-        //Set Previous Data on Postbacks
-        SetPreviousData();
-    }
-    private void SetPreviousData()
-    {
-        int rowIndex = 0;
-        if (ViewState["CurrentTable"] != null)
-        {
-            DataTable dt = (DataTable)ViewState["CurrentTable"];
-            if (dt.Rows.Count > 0)
-            {
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    TextBox box1 = (TextBox)qualification.Rows[rowIndex].Cells[1].FindControl("company");
-                    TextBox box2 = (TextBox)qualification.Rows[rowIndex].Cells[2].FindControl("position");
-                    TextBox box3 = (TextBox)qualification.Rows[rowIndex].Cells[3].FindControl("from");
-                    TextBox box4 = (TextBox)qualification.Rows[rowIndex].Cells[4].FindControl("to");
-
-                    box1.Text = dt.Rows[i]["company"].ToString();
-                    box2.Text = dt.Rows[i]["position"].ToString();
-                    box3.Text = dt.Rows[i]["from"].ToString();
-                    box4.Text = dt.Rows[i]["to"].ToString();
-                    rowIndex++;
-                }
-            }
-        }
-    } */
-    private static void AddInitialRows(string emailId, Panel workExperiencePanel)
+    [WebMethod]
+    public static void UpdateDetails(string firstName, string lastName, string gender, string dateOfBirth, string mobileNo, string fatherName, string motherName, string addressLine1, string addressLine2, string city, string state, string pincode, string country, List<List<string>> workExperienceArray)
     {
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
-            using (MySqlCommand getQualification = new MySqlCommand())
+            using (MySqlCommand updatePersonalDetails = new MySqlCommand())
             {
-                getQualification.CommandType = CommandType.Text;
-                getQualification.Connection = conn;
-                getQualification.CommandText = "Select * from qualification WHERE EmailID = @EmailId";
+                updatePersonalDetails.CommandType = CommandType.Text;
+                updatePersonalDetails.Connection = conn;
+                updatePersonalDetails.CommandText = "UPDATE data SET FirstName = @firstName, LastName = @lastName, FatherName = @fatherName, MotherName = @motherName, Gender = @gender, DOB = @dateOfBirth, AddLine1 = @addressLine1, AddLine2 = @addressLine2, City = @city, State = @state, Country = @country, Pin = @pincode, Contact = @mobileNo";
 
-                getQualification.Parameters.AddWithValue("@EmailId", emailId);
+                updatePersonalDetails.Parameters.AddWithValue("@firstName", firstName);
+                updatePersonalDetails.Parameters.AddWithValue("@lastName", lastName);
+                updatePersonalDetails.Parameters.AddWithValue("@FatherName", fatherName);
+                updatePersonalDetails.Parameters.AddWithValue("@motherName", motherName);
+                updatePersonalDetails.Parameters.AddWithValue("@gender", gender);
+                updatePersonalDetails.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
+                updatePersonalDetails.Parameters.AddWithValue("@addressLine1", addressLine1);
+                updatePersonalDetails.Parameters.AddWithValue("@addressLine2", addressLine2);
+                updatePersonalDetails.Parameters.AddWithValue("@city", city);
+                updatePersonalDetails.Parameters.AddWithValue("@state", state);
+                updatePersonalDetails.Parameters.AddWithValue("@country", country);
+                updatePersonalDetails.Parameters.AddWithValue("@pincode", pincode);
+                updatePersonalDetails.Parameters.AddWithValue("@mobileNo", mobileNo);
 
                 conn.Open();
-                MySqlDataReader reader = getQualification.ExecuteReader();
-                while(reader.Read())
+                updatePersonalDetails.ExecuteNonQuery();
+                conn.Close();
+            }
+            using (MySqlCommand deleteWorkExperience = new MySqlCommand())
+            {
+                deleteWorkExperience.CommandType = CommandType.Text;
+                deleteWorkExperience.Connection = conn;
+                deleteWorkExperience.CommandText = "DELETE FROM qualification WHERE EmailId = @EmailId";
+
+                deleteWorkExperience.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
+
+                conn.Open();
+                deleteWorkExperience.ExecuteNonQuery();
+                conn.Close();
+            }
+            using (MySqlCommand updateWorkExperience = new MySqlCommand())
+            {
+                updateWorkExperience.CommandType = CommandType.Text;
+                updateWorkExperience.Connection = conn;
+                updateWorkExperience.CommandText = "INSERT INTO qualification(EmailId, Company, Position, fromDate, toDate) VALUES (@EmailId, @company, @position, @fromDate, @toDate)";
+
+          
+                conn.Open();
+
+                updateWorkExperience.Parameters.Add("@company", MySqlDbType.VarChar);
+                updateWorkExperience.Parameters.Add("@position", MySqlDbType.VarChar);
+                updateWorkExperience.Parameters.Add("@fromDate", MySqlDbType.VarChar);
+                updateWorkExperience.Parameters.Add("@toDate", MySqlDbType.VarChar);
+                updateWorkExperience.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
+
+                for (int i = 0; i < workExperienceArray.Count; i++)
                 {
-                    addDataToNewRow(workExperiencePanel, reader["Company"].ToString(), reader["Position"].ToString(), reader["fromDate"].ToString(), reader["toDate"].ToString());
+                    updateWorkExperience.Parameters["@company"].Value = workExperienceArray[i][0];
+                    updateWorkExperience.Parameters["@position"].Value = workExperienceArray[i][1];
+                    updateWorkExperience.Parameters["@fromDate"].Value = workExperienceArray[i][2];
+                    updateWorkExperience.Parameters["@toDate"].Value = workExperienceArray[i][3];
+
+                    updateWorkExperience.ExecuteNonQuery();
                 }
+                conn.Close();
             }
         }
     }
-
-    private static void addDataToNewRow(Panel workExperiencePanel, string Company, string Position, string FromDate, string ToDate)
-    {
-        HtmlGenericControl tr = new HtmlGenericControl("tr");
-        HtmlGenericControl serialNumber = new HtmlGenericControl("td");
-        HtmlGenericControl companyTh = new HtmlGenericControl("td");
-        HtmlGenericControl company = new HtmlGenericControl("input");
-        HtmlGenericControl positionTh = new HtmlGenericControl("td");
-        HtmlGenericControl position = new HtmlGenericControl("input");
-        HtmlGenericControl fromYearTh = new HtmlGenericControl("td");
-        HtmlGenericControl fromYear = new HtmlGenericControl("input");
-        HtmlGenericControl toYearTh = new HtmlGenericControl("td");
-        HtmlGenericControl toYear = new HtmlGenericControl("input");
-
-        workExperiencePanel.Controls.Add(tr);
-        tr.Controls.Add(serialNumber);
-        tr.Controls.Add(companyTh);
-        tr.Controls.Add(positionTh);
-        tr.Controls.Add(fromYearTh);
-        tr.Controls.Add(toYearTh);
-        companyTh.Controls.Add(company);
-        positionTh.Controls.Add(position);
-        fromYearTh.Controls.Add(fromYear);
-        toYearTh.Controls.Add(toYear);
-
-        company.ID = "company" + counter.ToString();
-        company.Attributes.Add("class", "form-control");
-        position.ID = "position" + counter.ToString();
-        position.Attributes.Add("class", "form-control");
-        fromYear.ID = "fromYear" + counter.ToString();
-        fromYear.Attributes.Add("class", "form-control");
-        toYear.ID = "toYear" + counter.ToString();
-        toYear.Attributes.Add("class", "form-control");
-
-
-        serialNumber.InnerText = counter.ToString();
-        company.Attributes.Add("value", Company);
-        position.Attributes.Add("value", Position);
-        fromYear.Attributes.Add("value", FromDate);
-        toYear.Attributes.Add("value", ToDate);
-
-        counter++;
-    }
-        
-    public void AddWorkExperience(string[][] data)
-    {
-        
-    }
-
-    protected void addMoreRows_Click(object sender, EventArgs e)
-    {
-        addDataToNewRow(workExperiencePanel, null, null, null, null);
-        extraRowsCounter++;
-        /*
-        HtmlGenericControl tr = new HtmlGenericControl("tr");
-        HtmlGenericControl serialNumber = new HtmlGenericControl("td");
-        HtmlGenericControl companyTh = new HtmlGenericControl("td");
-        HtmlGenericControl company = new HtmlGenericControl("input");
-        HtmlGenericControl positionTh = new HtmlGenericControl("td");
-        HtmlGenericControl position = new HtmlGenericControl("input");
-        HtmlGenericControl fromYearTh = new HtmlGenericControl("td");
-        HtmlGenericControl fromYear = new HtmlGenericControl("input");
-        HtmlGenericControl toYearTh = new HtmlGenericControl("td");
-        HtmlGenericControl toYear = new HtmlGenericControl("input");
-
-        workExperiencePanel.ContentTemplateContainer.Controls.Add(tr);
-        tr.Controls.Add(serialNumber);
-        tr.Controls.Add(companyTh);
-        tr.Controls.Add(positionTh);
-        tr.Controls.Add(fromYearTh);
-        tr.Controls.Add(toYearTh);
-        companyTh.Controls.Add(company);
-        positionTh.Controls.Add(position);
-        fromYearTh.Controls.Add(fromYear);
-        toYearTh.Controls.Add(toYear);
-
-        company.ID = "company" + (counter + extraRowsCounter).ToString();
-        company.Attributes.Add("class", "form-control");
-        position.ID = "position" + (counter + extraRowsCounter).ToString();
-        position.Attributes.Add("class", "form-control");
-        fromYear.ID = "fromYear" + (counter + extraRowsCounter).ToString();
-        fromYear.Attributes.Add("class", "form-control");
-        toYear.ID = "toYear" + (counter + extraRowsCounter).ToString();
-        toYear.Attributes.Add("class", "form-control");
-
-        serialNumber.InnerText = (counter + extraRowsCounter).ToString();
-        extraRowsCounter++;
-        */
-    }
-    protected void btn_submit(object sender, EventArgs e)
-    {
-
-    }
-
-    
 
     [WebMethod]
     public static List<string[]> GetExperienceData()
@@ -251,7 +113,6 @@ public partial class EDIT : System.Web.UI.Page
                 conn.Close();
             }
             return workExperienceArray;
-            
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -263,10 +124,6 @@ public partial class EDIT : System.Web.UI.Page
 
         if (!Page.IsPostBack)
         {
-            counter = 1;
-            extraRowsCounter = 0;
-       //     AddInitialRows(Session["email"].ToString(), workExperiencePanel);
-
             using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
             {
                 using (MySqlCommand sample = new MySqlCommand())
@@ -301,90 +158,5 @@ public partial class EDIT : System.Web.UI.Page
                 }
             }
         }
-            // SetInitialRow();
     }
-    
-  /*  protected void btn_submit(object sender, EventArgs e)
-    {
-        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
-        {
-            using (MySqlCommand sample = new MySqlCommand())
-            {
-                sample.CommandType = CommandType.Text;
-                sample.Connection = conn;
-                sample.CommandText = "UPDATE data SET FirstName=@FirstName, LastName=@LastName, EmailId=@EmailId, FatherName=@FatherName, Contact=@Contact, Gender=@Gender, MotherName=@MotherName, DOB=@DOB, AddLine1=@AddLine1, AddLine2=@AddLine2, AddCity=@AddCity, AddState=@AddState, AddCountry=@AddCountry, AddPin=@AddPin WHERE EmailId=@EmailId";
-                sample.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
-
-                sample.Parameters.AddWithValue("@FirstName", Request.Form["user_name1"].ToString());
-                sample.Parameters.AddWithValue("@LastName", Request.Form["user_name2"].ToString());
-                sample.Parameters.AddWithValue("@FatherName", Request.Form["user_father"].ToString());
-                sample.Parameters.AddWithValue("@Contact", Request.Form["user_contact"].ToString());
-                sample.Parameters.AddWithValue("@Gender", user_gender.SelectedValue);
-                sample.Parameters.AddWithValue("@MotherName", Request.Form["user_mother"].ToString());
-                sample.Parameters.AddWithValue("@DOB", Request.Form["user_dob"].ToString());
-                sample.Parameters.AddWithValue("@AddLine1", Request.Form["add_l1"].ToString());
-                sample.Parameters.AddWithValue("@AddLine2", Request.Form["add_l2"].ToString());
-                sample.Parameters.AddWithValue("@AddCity", Request.Form["add_city"].ToString());
-                sample.Parameters.AddWithValue("@AddState", Request.Form["add_state"].ToString());
-                sample.Parameters.AddWithValue("@AddCountry", Request.Form["add_country"].ToString());
-                sample.Parameters.AddWithValue("@AddPin", Request.Form["add_pin"].ToString());
-
-                conn.Open();
-                sample.ExecuteNonQuery();
-                conn.Close();
-            }
-
-
-            using (MySqlCommand edu = new MySqlCommand())
-            {
-                edu.CommandType = CommandType.Text;
-                edu.Connection = conn;
-                edu.CommandText = "delete from qualification where EmailId=@EmailId";
-                edu.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
-                conn.Open();
-                MySqlDataReader QueryTableReader = edu.ExecuteReader();
-                
-                while (QueryTableReader.Read())
-                {
-                    edu.ExecuteNonQuery();
-                }
-               
-                conn.Close();
-
-                edu.CommandText = "INSERT into qualification  (Company,position,EmailId,fromDate,toDate) values (@Company,@position,@EmailId,@fromDate,@toDate)";
-                conn.Open();
-                //edu.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
-                int rowIndex = 0;
-                if (ViewState["CurrentTable"] != null)
-                {
-                    DataTable dtCurrentTable = (DataTable)ViewState["CurrentTable"];
-                    DataRow drCurrentRow = null;
-                    if (dtCurrentTable.Rows.Count > 0)
-                    {
-                        for (int i = 1; i <= dtCurrentTable.Rows.Count; i++)
-                        {
-                            edu.Parameters.Clear();
-                            //extract the TextBox values
-                            TextBox box1 = (TextBox)qualification.Rows[rowIndex].Cells[1].FindControl("company");
-                            TextBox box2 = (TextBox)qualification.Rows[rowIndex].Cells[2].FindControl("position");
-                            TextBox box3 = (TextBox)qualification.Rows[rowIndex].Cells[3].FindControl("from");
-                            TextBox box4 = (TextBox)qualification.Rows[rowIndex].Cells[4].FindControl("to");
-                            edu.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
-                            edu.Parameters.AddWithValue("@Company", box1.Text.ToString());
-                            edu.Parameters.AddWithValue("@position", box2.Text.ToString());
-                            edu.Parameters.AddWithValue("@fromDate", box3.Text.ToString());
-                            edu.Parameters.AddWithValue("@toDate", box4.Text.ToString());
-                            edu.ExecuteNonQuery();
-                            rowIndex++;
-                        }
-
-                    }
-                }
-               
-                Response.Redirect("homepage.aspx");
-                conn.Close();
-            }
-          
-        }
-    } */
 }

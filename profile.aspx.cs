@@ -2,6 +2,9 @@
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Web.Services;
+using System.Collections.Generic;
+using System.Web;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -34,15 +37,17 @@ public partial class _Default : System.Web.UI.Page
                     user_contact.Text = reader["Contact"].ToString();
                     user_father.Text = reader["FatherName"].ToString();
                     user_mother.Text = reader["MotherName"].ToString();
-                    add_l1.Text = reader["AddLine1"].ToString();
-                    add_l2.Text = reader["AddLine2"].ToString();
-                    add_city.Text = reader["City"].ToString();
-                    add_state.Text = reader["State"].ToString();
-                    add_pin.Text = reader["Pin"].ToString();
+                    add_l1.Text = reader["AddLine1"].ToString() + ", ";
+                    add_l2.Text = reader["AddLine2"].ToString() + ", ";
+                    add_city.Text = reader["City"].ToString() + ", ";
+                    add_state.Text = reader["State"].ToString() + " - ";
+                    add_pin.Text = reader["Pin"].ToString() + ",";
                     add_country.Text = reader["Country"].ToString();
+                    userImageThumbnail.ImageUrl = userImage.ImageUrl = reader["ImageLink"].ToString();
                 }
                 conn.Close();
             }
         }
     }
+
 }

@@ -21,7 +21,7 @@ public partial class profile : System.Web.UI.Page
             {
                 fillPageEntries.CommandType = CommandType.Text;
                 fillPageEntries.Connection = conn;
-                fillPageEntries.CommandText = "select FirstName FROM data WHERE EmailId = @EmailId";
+                fillPageEntries.CommandText = "select FirstName, ImageLink FROM data WHERE EmailId = @EmailId";
 
                 fillPageEntries.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
                 conn.Open();
@@ -32,6 +32,7 @@ public partial class profile : System.Web.UI.Page
                 {
                     u_name.Text = user_name.Text = user_name1.Text = reader["FirstName"].ToString();
                     Session.Add("firstName", u_name.Text);
+                    userImageThumbnail.ImageUrl = reader["ImageLink"].ToString();
                 }
                 conn.Close();
             }
@@ -45,7 +46,7 @@ public partial class profile : System.Web.UI.Page
                 MySqlDataReader reader = getAllFeeds.ExecuteReader();
                 while(reader.Read())
                 {
-                    AddFeedToPage(reader["FirstName"] + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
+                    AddFeedToPage(reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
                 }
             }
         }
@@ -71,6 +72,7 @@ public partial class profile : System.Web.UI.Page
                 insertFeed.ExecuteNonQuery();
                 conn.Close();
             }
+            string userImageLink = null;
             using (MySqlCommand getImageLink = new MySqlCommand())
             {
                 getImageLink.CommandType = CommandType.Text;
@@ -78,8 +80,14 @@ public partial class profile : System.Web.UI.Page
                 getImageLink.CommandText = "select ImageLink from data where EmailId = @EmailId";
 
                 getImageLink.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
+                conn.Open();
+
+                MySqlDataReader reader = getImageLink.ExecuteReader();
+                if (reader.Read())
+                    userImageLink = reader["ImageLink"].ToString();
+
             }
-            AddFeedToPage(Session["FullName"].ToString(), NewFeed.Text, "", timeStamp, feedsPanel);
+            AddFeedToPage(Session["FullName"].ToString(), NewFeed.Text, userImageLink, timeStamp, feedsPanel);
             NewFeed.Text = null;
         }
     }
@@ -90,26 +98,26 @@ public partial class profile : System.Web.UI.Page
         Panel feedElement = new Panel();
         Panel mediaBodyPanel = new Panel();
         Panel feedText = new Panel();
-        Panel commentButtonPanel = new Panel();
         Button commentButton = new Button();
         HtmlGenericControl strongTag = new HtmlGenericControl("strong");
         
         mediaBodyPanel.CssClass = "media-body";
         feedElement.CssClass = "feed-element";
         feedText.CssClass = "well";
-        commentButtonPanel.CssClass = "pull-right";
         commentButton.CssClass = "btn btn-primary btn-outline btn-sm pull-right";
 
-        strongTag.InnerText = FullName;
+        strongTag.InnerText = " " + FullName;
         postOwnerImage.ImageUrl = imageLink;
+        postOwnerImage.Height = 25;
+        
         commentButton.Text = "Comment";
         feedText.Controls.Add(new LiteralControl(FeedText));
         commentButton.Click += CommentButton_Click;
 
         feedsPanel.ContentTemplateContainer.Controls.AddAt(0, feedElement);
-        feedElement.Controls.Add(postOwnerImage);
         feedElement.Controls.Add(mediaBodyPanel);
-        
+        mediaBodyPanel.Controls.Add(postOwnerImage);
+
         mediaBodyPanel.Controls.Add(strongTag);
         mediaBodyPanel.Controls.Add(new LiteralControl(" posted on " + timeStamp));
         mediaBodyPanel.Controls.Add(feedText);

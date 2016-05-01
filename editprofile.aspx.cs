@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
-using Newtonsoft.Json;
 using System.Web.Services;
 using System.Web;
 using System.Collections.Generic;
@@ -18,13 +15,15 @@ public partial class EDIT : System.Web.UI.Page
     [WebMethod]
     public static void UpdateDetails(string firstName, string lastName, string gender, string dateOfBirth, string mobileNo, string fatherName, string motherName, string addressLine1, string addressLine2, string city, string state, string pincode, string country, List<List<string>> workExperienceArray)
     {
+        HttpContext.Current.Session["FullName"] = firstName + " " + lastName;
+
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             using (MySqlCommand updatePersonalDetails = new MySqlCommand())
             {
                 updatePersonalDetails.CommandType = CommandType.Text;
                 updatePersonalDetails.Connection = conn;
-                updatePersonalDetails.CommandText = "UPDATE data SET FirstName = @firstName, LastName = @lastName, FatherName = @fatherName, MotherName = @motherName, Gender = @gender, DOB = @dateOfBirth, AddLine1 = @addressLine1, AddLine2 = @addressLine2, City = @city, State = @state, Country = @country, Pin = @pincode, Contact = @mobileNo";
+                updatePersonalDetails.CommandText = "UPDATE data SET FirstName = @firstName, LastName = @lastName, FatherName = @fatherName, MotherName = @motherName, Gender = @gender, DOB = @dateOfBirth, AddLine1 = @addressLine1, AddLine2 = @addressLine2, City = @city, State = @state, Country = @country, Pin = @pincode, Contact = @mobileNo Where EmailId = @EmailId";
 
                 updatePersonalDetails.Parameters.AddWithValue("@firstName", firstName);
                 updatePersonalDetails.Parameters.AddWithValue("@lastName", lastName);
@@ -39,6 +38,7 @@ public partial class EDIT : System.Web.UI.Page
                 updatePersonalDetails.Parameters.AddWithValue("@country", country);
                 updatePersonalDetails.Parameters.AddWithValue("@pincode", pincode);
                 updatePersonalDetails.Parameters.AddWithValue("@mobileNo", mobileNo);
+                updatePersonalDetails.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
 
                 conn.Open();
                 updatePersonalDetails.ExecuteNonQuery();
@@ -153,6 +153,7 @@ public partial class EDIT : System.Web.UI.Page
                         add_state.Text = reader["State"].ToString();
                         add_pin.Text = reader["Pin"].ToString();
                         add_country.Text = reader["Country"].ToString();
+                        userImageThumbnail.ImageUrl = reader["ImageLink"].ToString();
 
                         conn.Close();
                     }

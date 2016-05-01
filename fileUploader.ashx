@@ -13,7 +13,7 @@ public class fileUploader : IHttpHandler, IRequiresSessionState
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
-        string pathToSave_100 = null;
+        string pathToSave = "MediaUploader/";
         try
         {
             string dirFullPath = HttpContext.Current.Server.MapPath("~/MediaUploader/");
@@ -34,11 +34,12 @@ public class fileUploader : IHttpHandler, IRequiresSessionState
                 {
                     fileExtension = Path.GetExtension(fileName);
                     str_image = "MyPHOTO_" + numFiles.ToString() + fileExtension;
-                    pathToSave_100 = HttpContext.Current.Server.MapPath("~/MediaUploader/") + str_image;
+                    string pathToSave_100 = HttpContext.Current.Server.MapPath("~/MediaUploader/") + str_image;
+                    pathToSave += str_image;
                     file.SaveAs(pathToSave_100);
                 }
             }
-            string temp = HttpContext.Current.Session["email"].ToString();
+
             using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
             {
                 using (MySqlCommand updateImageLink = new MySqlCommand())
@@ -47,7 +48,7 @@ public class fileUploader : IHttpHandler, IRequiresSessionState
                     updateImageLink.Connection = conn;
                     updateImageLink.CommandText = "UPDATE data SET ImageLink = @ImageLink WHERE EmailId = @EmailId";
 
-                    updateImageLink.Parameters.AddWithValue("@ImageLink", pathToSave_100);
+                    updateImageLink.Parameters.AddWithValue("@ImageLink", pathToSave);
                     updateImageLink.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
 
                     conn.Open();

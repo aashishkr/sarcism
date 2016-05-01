@@ -31,7 +31,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                        <asp:Image AlternateText="Image" CssClass="img-circle" runat="server" Width="55" ID="userImageThumbnail"/>
                              </span>
                         <a href="profile.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
@@ -187,7 +187,7 @@
                     <h3 class="box-title">Work Experience</h3>
                 </div>
                 <div class="table-responsive">
-                    <table class="table" id="workExperienceTable">
+                    <table class="table table-hover table-bordered table-striped table-condensed" id="workExperienceTable">
                         <thead>
                             <tr>
                                 <th>Serial Number</th>
@@ -198,9 +198,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            <asp:Panel runat="server" ID="workExperiencePanel" UpdateMode="Conditional">    
-                            </asp:Panel>
                         </tbody>
                     </table>
                 </div>
@@ -362,7 +359,6 @@
             userDetails.pincode = document.getElementById("add_pin").value;
             userDetails.country = document.getElementById("add_country").value; 
             userDetails.workExperienceArray = tableArray;
-            userDetails.image = document.getElementById("user_image").files[0];
 
             
             $.ajax({
@@ -371,7 +367,11 @@
                 contentType: "application/json",
                 data: JSON.stringify(userDetails),
                 success: function (response) {
-                    alert("Data saved successfully");
+                    setTimeout(function () {
+                        location.reload();
+                        alert("Data saved successfully");
+                    }, 1000);
+                    
                 },
                 failure: function (response) {
                     alert("Data could not be saved, try again later");

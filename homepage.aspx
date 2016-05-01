@@ -28,7 +28,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                        <asp:Image AlternateText="Image" CssClass="img-circle" runat="server" ID="userImageThumbnail" Width="55"/>
                              </span>
                         <a href="profile.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>

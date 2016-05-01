@@ -44,7 +44,7 @@
                 </asp:button>
 
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">COMPUTER SCIENCE & ENGINEERING</span> SOCIETY
+                    <i class="fa fa-play-circle"></i>  <span class="light">SARC</span>
                 </a>
             </div>
 
@@ -61,9 +61,9 @@
                     <li>
                         <a class="page-scroll" href="#download">SignUp</a>
                     </li>
-                    <li>
+                  <!--  <li>
                         <a class="page-scroll" href="#contact">Gallery</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -77,7 +77,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Student Alumni Web Portal</h1>
+                        <h1 class="brand-heading">Student Alumni Relationship Cell</h1>
                         <p class="intro-text">Computer Science & Engineering Society<br>ISM Dhanbad</p>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
@@ -127,55 +127,46 @@
                                 <asp:ListItem Selected="True" style="margin-right:30px;font-size:16px;">Male</asp:ListItem>
                                 <asp:ListItem style="font-size:16px;">Female</asp:ListItem>
                             </asp:RadioButtonList></strong>
-                            <!--<asp:TextBox runat="server"  type="radio" ID="m" name="sex" value="m" checked="checked" style="float:left;margin-left:5%;font-size:18px;color:#fff;" />
-                            <label style="float:left;margin-left:2%;font-size:18px;color:#fff;">Male</label>
-                            <asp:TextBox runat="server" type="radio" ID="f" name="sex" value="f" style="float:left;margin-left:5%;font-size:18px;color:#fff;" />
-                            <label style="float:left;margin-left:2%;font-size:18px;color:#fff;">Female</label>-->
+                            
                             
                             <asp:TextBox runat="server" id="u_email" type="text" class="form-control left" placeholder="Email" style="width:82%;" /><br /><br />
                             <asp:TextBox runat="server" id="u_password" type="password" class="form-control left" placeholder="Password" style="width:82%;" />
                             <br /><br />
                             <asp:TextBox runat="server" id="u_contact" type="text" class="form-control left" placeholder="Contact No" style="width:82%;" />
                             <br /><br />
-                            <div class="checkbox left" style="margin-left:10%;color:#fff">
-                                <asp:TextBox runat="server" id="send_updates" type="checkbox" />
-                                <label for="send_updates">Send me occasional email updates</label>
-                            </div><br /><br /><br />
+                            <br /><br /><br />
                             <asp:Button runat="server" id="SignUp" type="submit" Text="Submit" OnClick="btn_submit" CssClass="btn btn-default btn-lg left" style="margin-left:25%" />
                     </div> 
                 </div>
         </div>
     </section>
     </form>
-    <!-- Contact Section -->
+    <!-- Contact Section 
     <section id="contact" class="gallery">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>GALLERY</h2>
                 </div>
             </div>
-    </section>
+    </section> -->
 
-    <!-- Footer -->
+    <!-- Footer
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; Your Website 2014</p>
+            <p>Copyright &copy; Computer Science & Engineering Society 2016</p>
             <p>
-                <a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+                
             </p>
             <ul class="list-inline banner-social-buttons">
                 <li>
-                    <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                 </li>
                 <li>
-                    <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                 </li>
                 <li>
-                    <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
                 </li>
             </ul>
         </div>
-    </footer>
+    </footer> -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

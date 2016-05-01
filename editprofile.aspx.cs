@@ -10,10 +10,11 @@ using System.Web.Services;
 using System.Web;
 using System.Collections.Generic;
 using System.Web.Script.Services;
+using System.IO;
+
 
 public partial class EDIT : System.Web.UI.Page
 {
-    
     [WebMethod]
     public static void UpdateDetails(string firstName, string lastName, string gender, string dateOfBirth, string mobileNo, string fatherName, string motherName, string addressLine1, string addressLine2, string city, string state, string pincode, string country, List<List<string>> workExperienceArray)
     {

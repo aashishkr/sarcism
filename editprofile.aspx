@@ -86,15 +86,24 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
-                                        <div class="form-group col-md-3 col-lg-3">
+                                        <div class="form-group col-md-3">
+                                            First Name <br />
                                             <asp:TextBox runat="server" ID="user_name1" class="form-control"  placeholder="First Name" />
                                             <p class="help-block"></p>
                                         </div>
-                                        <div class="form-group col-md-3 col-lg-3"  >
+                                        <div class="form-group col-md-3" >
+                                            Last Name<br />
                                             <asp:TextBox runat="server" ID="user_name2" class="form-control"  placeholder="Last Name"  />
                                             <p class="help-block"></p>
                                         </div>
+                                        <div class="form-group col-md-3" >
+                                            Upload Image<br />
+                                            <input type="file" class="upload"  id="f_UploadImage" /><br />
+                                            <img id="myUploadedImg" alt="Photo" style="width:180px;" />
+                                        </div>
                                     </div>
+                                    </div>
+                                    
                                     <div class="row"  >
                                         <div class="col-md-3 col-sm-12 col-lg-3"  >
                                             Gender <br />
@@ -219,7 +228,7 @@
             
                 </div>
             </div>
-		</div></div>
+		</div>
             </section>
             </div>
             <div class="container-fluid">
@@ -231,9 +240,6 @@
             </div>
             
         </div>
-        
-            
-    </div>
   
     </form>
         
@@ -288,6 +294,43 @@
             table.deleteRow(length - 1);
         }
 
+        var _URL = window.URL || window.webkitURL;
+        $("#f_UploadImage").on('change', function () {
+
+            var file, img;
+            if ((file = this.files[0])) {
+                img = new Image();
+                img.onload = function () {
+                    sendFile(file);
+                };
+                img.onerror = function () {
+                    alert("Not a valid file:" + file.type);
+                };
+                img.src = _URL.createObjectURL(file);
+            }
+        });
+
+        function sendFile(file) {
+
+            var formData = new FormData();
+            formData.append('file', $('#f_UploadImage')[0].files[0]);
+            $.ajax({
+                type: 'post',
+                url: 'fileUploader.ashx',
+                data: formData,
+                success: function (status) {
+                    if (status != 'error') {
+                        var my_path = "MediaUploader/" + status;
+                        $("#myUploadedImg").attr("src", my_path);
+                    }
+                },
+                processData: false,
+                contentType: false,
+                error: function () {
+                    alert("Whoops something went wrong!");
+                }
+            });
+        }
         function sendEntireData()
         {
             var table = document.getElementById("workExperienceTable");
@@ -302,7 +345,7 @@
                 }
                 tableArray.push(tempArray);
             }
-            
+
             var userDetails = {};
 
             userDetails.firstName = document.getElementById("user_name1").value;
@@ -319,6 +362,8 @@
             userDetails.pincode = document.getElementById("add_pin").value;
             userDetails.country = document.getElementById("add_country").value; 
             userDetails.workExperienceArray = tableArray;
+            userDetails.image = document.getElementById("user_image").files[0];
+
             
             $.ajax({
                 type: "POST",

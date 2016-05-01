@@ -12,7 +12,7 @@ public partial class _Default : System.Web.UI.Page
     {
         if (Session.Count == 0)
         {
-            Response.Redirect("MainPage.aspx");
+            Response.Redirect("index.aspx");
         }
 
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))

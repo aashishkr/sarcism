@@ -64,7 +64,7 @@
                     <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
                 </li>                
                 <li>
-                    <a href="MainPage.aspx">
+                    <a href="index.aspx">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>

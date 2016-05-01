@@ -120,7 +120,7 @@ public partial class EDIT : System.Web.UI.Page
     {
         if (Session.Count == 0)
         {
-            Response.Redirect("MainPage.aspx");
+            Response.Redirect("index.aspx");
         }
 
         if (!Page.IsPostBack)

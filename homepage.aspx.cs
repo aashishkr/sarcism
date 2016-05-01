@@ -13,7 +13,7 @@ public partial class profile : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if(Session.Count == 0)
-            Response.Redirect("MainPage.aspx");
+            Response.Redirect("index.aspx");
 
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {

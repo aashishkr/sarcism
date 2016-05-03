@@ -23,6 +23,9 @@
     <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
+    <form runat="server">
+
+    
     <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -82,10 +85,6 @@
                         </div>
                     </div>
                     <div>
-                        <div class="form-group">
-                            <input id="stu_id" value="14JE000289" class="form-control"  type="hidden"  />
-                                <p class="help-block"></p>
-                        </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12"  >
                                 <div class="box box-solid box-primary"  >
@@ -177,7 +176,7 @@
         </div><!-- ./wrapper -->
         </div>
     </div>
-
+</form>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>

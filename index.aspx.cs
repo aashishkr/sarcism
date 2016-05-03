@@ -3,40 +3,68 @@ using System.Web.UI;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Web.Services;
+using System.Text;
+using System.Security.Cryptography;
+using System.Web;
 
 public partial class MainPage : System.Web.UI.Page
 {
+    private static string ComputeSHA(string input)
+    {
+        byte[] byteArray = Encoding.ASCII.GetBytes(input);
+
+        SHA1 sha = new SHA1CryptoServiceProvider();
+        byte[] result = sha.ComputeHash(byteArray);
+
+        return Encoding.ASCII.GetString(result);
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
-    protected void btn_submit(object sender, EventArgs e)
+    [WebMethod]
+    public static string CreateNewUser(string emailId, string password, string firstName, string lastName, string batch, string contact, string gender)
     {
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
-            using (MySqlCommand sample = new MySqlCommand())
+            using (MySqlCommand checkUserExists = new MySqlCommand())
             {
-                sample.CommandType = CommandType.Text;
-                sample.CommandText = "insert into data (EmailId, Password, FirstName, LastName, Batch, Contact, Gender) values(@EmailId, @Password, @FirstName, @LastName, @Batch, @Contact, @Gender)";
-                sample.Connection = conn;
+                checkUserExists.CommandType = CommandType.Text;
+                checkUserExists.Connection = conn;
+                checkUserExists.CommandText = "SELECT * FROM data WHERE EmailId = @EmailId";
 
-                sample.Parameters.AddWithValue("@EmailId", u_email.Text);
-                sample.Parameters.AddWithValue("@Password", u_password.Text);
-                sample.Parameters.AddWithValue("@FirstName", u_name1.Text);
-                sample.Parameters.AddWithValue("@LastName", u_name2.Text);
-                sample.Parameters.AddWithValue("@Batch", u_batch.Text);
-                sample.Parameters.AddWithValue("@Contact", u_contact.Text);
-                sample.Parameters.AddWithValue("@Gender", u_gender.SelectedValue);
+                checkUserExists.Parameters.AddWithValue("@EmailId", emailId);
+                conn.Open();
+                MySqlDataReader reader = checkUserExists.ExecuteReader();
+                if(reader.Read())
+                {
+                    return "false";
+                }
+                conn.Close();
+            }
+            using (MySqlCommand insertNewUserDetails = new MySqlCommand())
+            {
+                insertNewUserDetails.CommandType = CommandType.Text;
+                insertNewUserDetails.CommandText = "insert into data (EmailId, Password, FirstName, LastName, Batch, Contact, Gender) values(@EmailId, @Password, @FirstName, @LastName, @Batch, @Contact, @Gender)";
+                insertNewUserDetails.Connection = conn;
+
+                insertNewUserDetails.Parameters.AddWithValue("@EmailId", emailId);
+                insertNewUserDetails.Parameters.AddWithValue("@Password", ComputeSHA(password));
+                insertNewUserDetails.Parameters.AddWithValue("@FirstName", firstName);
+                insertNewUserDetails.Parameters.AddWithValue("@LastName", lastName);
+                insertNewUserDetails.Parameters.AddWithValue("@Batch", batch);
+                insertNewUserDetails.Parameters.AddWithValue("@Contact", contact);
+                insertNewUserDetails.Parameters.AddWithValue("@Gender", gender);
 
                 conn.Open();
-                sample.ExecuteNonQuery();
-                Session.Add("email", u_email.Text);
-                Session.Add("FullName", u_name1.Text + " " + u_name2.Text);
-                Response.Redirect("homepage.aspx");
+                insertNewUserDetails.ExecuteNonQuery();
+                HttpContext.Current.Session.Add("email", emailId);
+                HttpContext.Current.Session.Add("FullName", firstName + " " + lastName);
                 conn.Close();
-                
             }
         }
+        return "true"; 
     }
     protected void btn_login(object sender, EventArgs e)
     {
@@ -49,7 +77,7 @@ public partial class MainPage : System.Web.UI.Page
                 cmd.Connection = conn;
 
                 cmd.Parameters.AddWithValue("@EmailId", email.Text);
-                cmd.Parameters.AddWithValue("@Password", pass.Text);
+                cmd.Parameters.AddWithValue("@Password", ComputeSHA(pass.Text));
 
                 conn.Open();
 

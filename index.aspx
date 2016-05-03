@@ -128,12 +128,6 @@
                         <asp:TextBox runat="server" CssClass="form-control" ID="u_batch" placeholder="Passing Batch"/>
                     </div>
                     <div class="form-group col-xs-6">
-                        <asp:TextBox runat="server" CssClass="form-control" ID="u_admin" placeholder="Admission Number"/>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="form-group col-xs-6">
                          <div class="input-group">
                             <span class="input-group-addon">Gender</span>
                             <asp:DropDownList runat="server" ID="u_gender" CssClass="form-control dropdown">
@@ -142,7 +136,11 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-                    <div class="form-group col-xs-6">
+                    
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-xs-12">
                         <asp:TextBox ID="u_contact" CssClass="form-control" placeholder="Contact No" runat="server" />
                     </div>
                 </div>
@@ -160,7 +158,7 @@
                 </div>
                 <br />
                 <div class="row center-block">
-                    <asp:Button runat="server" ID="SignUp" Text="Submit" OnClick="btn_submit" CssClass="btn btn-default btn-lg"/>
+                    <input type="button" onclick="createNewUser()" class="btn btn-default btn-lg" value="Sign Up" />
                 </div>
             </div> 
          </div>
@@ -207,6 +205,42 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+
+    <script>
+        function createNewUser()
+        {
+            var json = {};
+            json = {
+                firstName: document.getElementById("u_name1").value,
+                lastName: document.getElementById("u_name2").value,
+                emailId: document.getElementById("u_email").value,
+                password: document.getElementById("u_password").value,
+                contact: document.getElementById("u_contact").value,
+                gender: document.getElementById("u_gender").options[document.getElementById("u_gender").selectedIndex].text,
+                batch: document.getElementById("u_batch").value
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/CreateNewUser",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, response) {
+                    var data = data[Object.keys(data)[0]];
+                    if (data == "true")
+                    {
+                        alert("You have successfully signed up");
+                        window.location.href = "editprofile.aspx";
+                    }
+                    else
+                    {
+                        alert(" A user is already registered with this Email ID");
+                    }
+                }
+            })
+        }
+    </script>
 
 </body>
 

@@ -64,9 +64,9 @@
                     <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
                 </li>
                 <li>
-                    <a href="index.aspx">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
+                    <asp:LinkButton runat="server" OnClick="ClearSessionVariables">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </asp:LinkButton>
                 </li>
             </ul>
         </nav>
@@ -220,6 +220,7 @@
 
     <script>
         window.onload = populateTable;
+        
         function populateTable() {
             $.ajax({
                 type: "POST",

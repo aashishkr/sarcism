@@ -161,4 +161,12 @@ public partial class EDIT : System.Web.UI.Page
             }
         }
     }
+
+    protected void ClearSessionVariables(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Clear();
+        Session.RemoveAll();
+        Response.Redirect("index.aspx");
+    }
 }

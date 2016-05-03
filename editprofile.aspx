@@ -67,9 +67,10 @@
                            <span class="m-r-sm text-muted welcome-message">Welcome to SARC</span>
                     </li>
                     <li>
-                        <a href="index.aspx">
+                        <asp:LinkButton runat="server" OnClick="ClearSessionVariables">
                             <i class="fa fa-sign-out"></i> Log out
-                        </a>
+                        </asp:LinkButton>
+
                     </li>
                 </ul>
                 </nav>
@@ -284,6 +285,18 @@
     <script>
         window.onload = populateTable;
         
+        function clearSessionVariable() {
+            $.ajax({
+                type: "POST",
+                url: "profile.aspx/ClearSessionVariables",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    alert("You have been logged out successfully");
+                }
+            })
+        }
+
         function deleteEmptyRow()
         {
             var table = document.getElementById("workExperienceTable");

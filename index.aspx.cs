@@ -17,14 +17,13 @@ public partial class MainPage : System.Web.UI.Page
             using (MySqlCommand sample = new MySqlCommand())
             {
                 sample.CommandType = CommandType.Text;
-                sample.CommandText = "insert into data (EmailId, Password, FirstName, LastName, FatherName, Batch, Contact, Gender) values(@EmailId, @Password, @FirstName, @LastName, @FatherName, @Batch, @Contact, @Gender)";
+                sample.CommandText = "insert into data (EmailId, Password, FirstName, LastName, Batch, Contact, Gender) values(@EmailId, @Password, @FirstName, @LastName, @Batch, @Contact, @Gender)";
                 sample.Connection = conn;
 
                 sample.Parameters.AddWithValue("@EmailId", u_email.Text);
                 sample.Parameters.AddWithValue("@Password", u_password.Text);
                 sample.Parameters.AddWithValue("@FirstName", u_name1.Text);
                 sample.Parameters.AddWithValue("@LastName", u_name2.Text);
-                sample.Parameters.AddWithValue("@FatherName", f_name.Text);
                 sample.Parameters.AddWithValue("@Batch", u_batch.Text);
                 sample.Parameters.AddWithValue("@Contact", u_contact.Text);
                 sample.Parameters.AddWithValue("@Gender", u_gender.SelectedValue);

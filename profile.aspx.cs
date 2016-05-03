@@ -3,7 +3,6 @@ using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Web.Services;
-using System.Collections.Generic;
 using System.Web;
 
 public partial class _Default : System.Web.UI.Page
@@ -49,5 +48,11 @@ public partial class _Default : System.Web.UI.Page
             }
         }
     }
-
+    protected void ClearSessionVariables(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Clear();
+        Session.RemoveAll();
+        Response.Redirect("index.aspx");
+    }
 }

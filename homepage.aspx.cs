@@ -54,6 +54,9 @@ public partial class profile : System.Web.UI.Page
 
     protected void SubmitPost_Click(object sender, EventArgs e)
     {
+        if (NewFeed.Text == null || NewFeed.Text == "")
+            return;
+
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             string timeStamp = DateTime.Now.ToString();
@@ -123,6 +126,14 @@ public partial class profile : System.Web.UI.Page
         mediaBodyPanel.Controls.Add(feedText);
         mediaBodyPanel.Controls.Add(commentButton);
 
+    }
+
+    protected void ClearSessionVariables(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Clear();
+        Session.RemoveAll();
+        Response.Redirect("index.aspx");
     }
 
     private static void CommentButton_Click(object sender, EventArgs e)

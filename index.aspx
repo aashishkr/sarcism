@@ -87,18 +87,19 @@
             </div>
         </div>
     </header>
+
     <form runat="server">
-    <!-- About Section -->
-    <section id="about" class="container content-section text-center">
+    
+    <section id="about" class="container content-section text-center" style="height:100vh">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-lg-4 col-lg-offset-4">
                 <h2>LOGIN</h2>
                 <span class="fa-stack fa-4x">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-shield fa-stack-1x text-primary"></i>
                 </span><br /><br />
-                    <asp:TextBox runat="server" id="email" type="email" placeholder="Email" CssClass="form-control" style="width:40%;margin-left:30%" /><br />
-                    <asp:TextBox runat="server" id="pass" type="password" placeholder="Password"  CssClass="form-control" style="width:40%;margin-left:30%" /><br /><br />
+                    <asp:TextBox runat="server" id="email" type="email" placeholder="Email" CssClass="form-control" /><br />
+                    <asp:TextBox runat="server" id="pass" type="password" placeholder="Password"  CssClass="form-control" /><br /><br />
                     <asp:Button runat="server" id="login" type="submit" Text="LOGIN" OnClick="btn_login" CssClass="btn btn-default btn-lg" />
                 <br /><br />
                 <a href="#download" class="btn btn-circle page-scroll">
@@ -109,36 +110,60 @@
     </section>
     
     <!-- Download Section -->
-    <section id="download" class="content-section text-center">
+    <section id="download" class="content-section text-center" style="height:100vh">
         <div class="download-section">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h2>SignUp</h2><br /><br />
-                    <div class="stu">
-                            <asp:TextBox runat="server" id="u_name1" type="text" class="form-control left" placeholder="First Name" style="width:40%;" />
-                            <asp:TextBox runat="server" id="u_name2" type="text" class="form-control right" placeholder="Last Name" style="width:40%;" />
-                            <br /><br />
-                            <asp:TextBox runat="server" id="f_name" type="text" class="form-control left" placeholder="Father's Name" style="width:82%;" />
-                            <br /><br />
-                            <asp:TextBox runat="server" id="u_batch" type="text" class="form-control left" placeholder="Batch" style="width:40%;" />
-                            <asp:TextBox runat="server" id="u_admin" type="text" class="form-control right" placeholder="Admission No" style="width:40%;" />
-                            <br /><br />
-                            <strong class="font-bold">
-                            <asp:RadioButtonList ID="u_gender" runat="server" RepeatDirection="Horizontal">
-                                <asp:ListItem Selected="True" style="margin-right:30px;font-size:16px;">Male</asp:ListItem>
-                                <asp:ListItem style="font-size:16px;">Female</asp:ListItem>
-                            </asp:RadioButtonList></strong>
-                            
-                            
-                            <asp:TextBox runat="server" id="u_email" type="text" class="form-control left" placeholder="Email" style="width:82%;" /><br /><br />
-                            <asp:TextBox runat="server" id="u_password" type="password" class="form-control left" placeholder="Password" style="width:82%;" />
-                            <br /><br />
-                            <asp:TextBox runat="server" id="u_contact" type="text" class="form-control left" placeholder="Contact No" style="width:82%;" />
-                            <br /><br />
-                            <br /><br /><br />
-                            <asp:Button runat="server" id="SignUp" type="submit" Text="Submit" OnClick="btn_submit" CssClass="btn btn-default btn-lg left" style="margin-left:25%" />
-                    </div> 
+            <div class="col-lg-4 col-lg-offset-4">
+                <h2>SignUp</h2><br />
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <asp:TextBox runat="server" CssClass="form-control" ID="u_name1" placeholder="First Name"/>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <asp:TextBox runat="server" CssClass="form-control" ID="u_name2" placeholder="Last Name"/>
+                    </div>
                 </div>
-        </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <asp:TextBox runat="server" CssClass="form-control" ID="u_batch" placeholder="Passing Batch"/>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <asp:TextBox runat="server" CssClass="form-control" ID="u_admin" placeholder="Admission Number"/>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                         <div class="input-group">
+                            <span class="input-group-addon">Gender</span>
+                            <asp:DropDownList runat="server" ID="u_gender" CssClass="form-control dropdown">
+                                <asp:ListItem Selected="True">Male</asp:ListItem>
+                                <asp:ListItem >Female</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <asp:TextBox ID="u_contact" CssClass="form-control" placeholder="Contact No" runat="server" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <asp:TextBox runat="server" ID="u_email" CssClass="form-control" placeholder="Email Address" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <asp:TextBox runat="server" ID="u_password" TextMode="Password" CssClass="form-control" placeholder="Password" />
+                    </div>
+                </div>
+                <br />
+                <div class="row center-block">
+                    <asp:Button runat="server" ID="SignUp" Text="Submit" OnClick="btn_submit" CssClass="btn btn-default btn-lg"/>
+                </div>
+            </div> 
+         </div>
     </section>
     </form>
     <!-- Contact Section 

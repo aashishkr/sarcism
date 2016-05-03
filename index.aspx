@@ -21,9 +21,9 @@
     <link href="css/grayscale.css" rel="stylesheet" />
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,9 +39,9 @@
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <asp:button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse" >
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse" >
                     <i class="fa fa-bars"></i>
-                </asp:button>
+                </button>
 
                 <a class="navbar-brand page-scroll" href="#page-top">
                     <i class="fa fa-play-circle"></i>  <span class="light">SARC</span>
@@ -98,8 +98,8 @@
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-shield fa-stack-1x text-primary"></i>
                 </span><br /><br />
-                    <asp:TextBox runat="server" id="email" type="email" placeholder="Email" CssClass="form-control" /><br />
-                    <asp:TextBox runat="server" id="pass" type="password" placeholder="Password"  CssClass="form-control" /><br /><br />
+                    <asp:TextBox runat="server" id="email" placeholder="Email" CssClass="form-control" /><br />
+                    <asp:TextBox runat="server" id="pass" TextMode="Password" placeholder="Password"  CssClass="form-control" /><br /><br />
                     <asp:Button runat="server" id="login" type="submit" Text="LOGIN" OnClick="btn_login" CssClass="btn btn-default btn-lg" />
                 <br /><br />
                 <a href="#download" class="btn btn-circle page-scroll">

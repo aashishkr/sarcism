@@ -116,23 +116,24 @@
                 <h2>SignUp</h2><br />
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <asp:TextBox runat="server" CssClass="form-control" ID="u_name1" placeholder="First Name"/>
+                        <input class="form-control" id="u_name1" placeholder="First Name" required="required"/>
                     </div>
                     <div class="form-group col-xs-6">
-                        <asp:TextBox runat="server" CssClass="form-control" ID="u_name2" placeholder="Last Name"/>
+                        <input class="form-control" id="u_name2" placeholder="Last Name"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <asp:TextBox runat="server" CssClass="form-control" ID="u_batch" placeholder="Passing Batch"/>
+                        <input class="form-control" id="u_batch" placeholder="Passing Batch" required="required"/>
                     </div>
                     <div class="form-group col-xs-6">
                          <div class="input-group">
                             <span class="input-group-addon">Gender</span>
                             <asp:DropDownList runat="server" ID="u_gender" CssClass="form-control dropdown">
                                 <asp:ListItem Selected="True">Male</asp:ListItem>
-                                <asp:ListItem >Female</asp:ListItem>
+                                <asp:ListItem>Female</asp:ListItem>
+                                <asp:ListItem>Other</asp:ListItem>
                             </asp:DropDownList>
                         </div>
                     </div>
@@ -141,19 +142,22 @@
                 
                 <div class="row">
                     <div class="form-group col-xs-12">
-                        <asp:TextBox ID="u_contact" CssClass="form-control" placeholder="Contact No" runat="server" />
+                        <input id="u_contact" class="form-control" placeholder="Contact No" required="required" pattern= title="Your contact number"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-xs-12">
-                        <asp:TextBox runat="server" ID="u_email" CssClass="form-control" placeholder="Email Address" />
+                        <input runat="server" id="u_email" class="form-control" placeholder="Email Address" title="Email Address of User" required="required" />
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-xs-12">
-                        <asp:TextBox runat="server" ID="u_password" TextMode="Password" CssClass="form-control" placeholder="Password" />
+                    <div class="form-group col-xs-6">
+                        <input id="u_password" type="password" class="form-control" placeholder="Password" required="required" oninput="checkPasswordSame()" />
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <input id="u_confirmPassword" type="password" class="form-control" placeholder="Confirm Password" oninput="checkPasswordSame()" />
                     </div>
                 </div>
                 <br />
@@ -164,32 +168,6 @@
          </div>
     </section>
     </form>
-    <!-- Contact Section 
-    <section id="contact" class="gallery">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h2>GALLERY</h2>
-                </div>
-            </div>
-    </section> -->
-
-    <!-- Footer
-    <footer>
-        <div class="container text-center">
-            <p>Copyright &copy; Computer Science & Engineering Society 2016</p>
-            <p>
-                
-            </p>
-            <ul class="list-inline banner-social-buttons">
-                <li>
-                </li>
-                <li>
-                </li>
-                <li>
-                </li>
-            </ul>
-        </div>
-    </footer> -->
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -207,38 +185,93 @@
     <script src="js/grayscale.js"></script>
 
     <script>
+        function checkPasswordSame()
+        {
+            var password = document.getElementById("u_password");
+            var confirmPassword = document.getElementById("u_confirmPassword");
+
+            if(password.value != confirmPassword.value)
+            {
+                confirmPassword.classList.add("btn-danger");
+            }
+            else
+            {
+                confirmPassword.classList.remove("btn-danger");
+                confirmPassword.classList.add("btn-success");
+            }
+        }
         function createNewUser()
         {
-            var json = {};
-            json = {
-                firstName: document.getElementById("u_name1").value,
-                lastName: document.getElementById("u_name2").value,
-                emailId: document.getElementById("u_email").value,
-                password: document.getElementById("u_password").value,
-                contact: document.getElementById("u_contact").value,
-                gender: document.getElementById("u_gender").options[document.getElementById("u_gender").selectedIndex].text,
-                batch: document.getElementById("u_batch").value
+            var emailIdRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            var phoneNumberRegex = new RegExp("^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$");
+
+            var firstName = document.getElementById("u_name1");
+            var lastName = document.getElementById("u_name2");
+            var emailId = document.getElementById("u_email");
+            var contact = document.getElementById("u_contact");
+            var batch = document.getElementById("u_batch");
+            var password = document.getElementById("u_password");
+            var confirmPassword = document.getElementById("u_confirmPassword");
+            var flag = true;
+
+            if (password.value != confirmPassword.value)
+                flag = false;
+
+
+            if (firstName.value.length == 0 || lastName.value.length == 0 || password.value.length == 0 || emailId.value.length == 0 || batch.value.length == 0)
+            {
+                flag = false;
+                alert("Some values are empty");
             }
 
-            $.ajax({
-                type: "POST",
-                url: "index.aspx/CreateNewUser",
-                data: JSON.stringify(json),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data, response) {
-                    var data = data[Object.keys(data)[0]];
-                    if (data == "true")
-                    {
-                        alert("You have successfully signed up");
-                        window.location.href = "editprofile.aspx";
-                    }
-                    else
-                    {
-                        alert(" A user is already registered with this Email ID");
-                    }
+
+            if (!emailIdRegex.test(emailId.value))
+            {
+                emailId.classList.add("btn-danger");
+                flag = false;
+            }
+
+                
+            if (!phoneNumberRegex.test(contact.value))
+            {
+                contact.classList.add("btn-danger");
+                flag = false;
+            }
+
+            if (flag == true)
+            {
+                var json = {};
+                json = {
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    emailId: emailId.value,
+                    password: password.value,
+                    contact: contact.value,
+                    gender: document.getElementById("u_gender").options[document.getElementById("u_gender").selectedIndex].text,
+                    batch: batch.value
                 }
-            })
+
+                $.ajax({
+                    type: "POST",
+                    url: "index.aspx/CreateNewUser",
+                    data: JSON.stringify(json),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, response) {
+                        var data = data[Object.keys(data)[0]];
+                        if (data == "true") {
+                            alert("You have successfully signed up");
+                            window.location.href = "editprofile.aspx";
+                        }
+                        else {
+                            alert(" A user is already registered with this Email ID");
+                        }
+                    }
+                })
+            }
+
+            
         }
     </script>
 

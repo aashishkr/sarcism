@@ -116,7 +116,7 @@
                 <h2>SignUp</h2><br />
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <input class="form-control" id="u_name1" placeholder="First Name" required="required"/>
+                        <input class="form-control" id="u_name1" placeholder="First Name"/>
                     </div>
                     <div class="form-group col-xs-6">
                         <input class="form-control" id="u_name2" placeholder="Last Name"/>
@@ -125,7 +125,7 @@
 
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <input class="form-control" id="u_batch" placeholder="Passing Batch" required="required"/>
+                        <input class="form-control" id="u_batch" placeholder="Passing Batch"/>
                     </div>
                     <div class="form-group col-xs-6">
                          <div class="input-group">
@@ -142,19 +142,25 @@
                 
                 <div class="row">
                     <div class="form-group col-xs-12">
-                        <input id="u_contact" class="form-control" placeholder="Contact No" required="required" pattern= title="Your contact number"/>
+                        <input id="u_contact" class="form-control" placeholder="Contact No" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-xs-12">
-                        <input runat="server" id="u_email" class="form-control" placeholder="Email Address" title="Email Address of User" required="required" />
+                        <input id="u_admissionNumber" class="form-control" placeholder="Your Admission Number" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <input runat="server" id="u_email" class="form-control" placeholder="Email Address" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <input id="u_password" type="password" class="form-control" placeholder="Password" required="required" oninput="checkPasswordSame()" />
+                        <input id="u_password" type="password" class="form-control" placeholder="Password" oninput="checkPasswordSame()" />
                     </div>
                     <div class="form-group col-xs-6">
                         <input id="u_confirmPassword" type="password" class="form-control" placeholder="Confirm Password" oninput="checkPasswordSame()" />
@@ -213,13 +219,14 @@
             var batch = document.getElementById("u_batch");
             var password = document.getElementById("u_password");
             var confirmPassword = document.getElementById("u_confirmPassword");
+            var admissionNumber = document.getElementById("u_admissionNumber");
             var flag = true;
 
             if (password.value != confirmPassword.value)
                 flag = false;
 
 
-            if (firstName.value.length == 0 || lastName.value.length == 0 || password.value.length == 0 || emailId.value.length == 0 || batch.value.length == 0)
+            if (firstName.value.length == 0 || lastName.value.length == 0 || password.value.length == 0 || emailId.value.length == 0 || batch.value.length == 0 || admissionNumber.value.length == 0)
             {
                 flag = false;
                 alert("Some values are empty");
@@ -249,7 +256,8 @@
                     password: password.value,
                     contact: contact.value,
                     gender: document.getElementById("u_gender").options[document.getElementById("u_gender").selectedIndex].text,
-                    batch: batch.value
+                    batch: batch.value,
+                    admissionNumber: admissionNumber.value
                 }
 
                 $.ajax({
@@ -265,7 +273,7 @@
                             window.location.href = "editprofile.aspx";
                         }
                         else {
-                            alert(" A user is already registered with this Email ID");
+                            alert(data);
                         }
                     }
                 })

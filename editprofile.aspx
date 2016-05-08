@@ -238,7 +238,7 @@
             </div>
             
         </div>
-  
+    </div>
     </form>
         
     
@@ -380,11 +380,8 @@
                 contentType: "application/json",
                 data: JSON.stringify(userDetails),
                 success: function (response) {
-                    setTimeout(function () {
                         location.reload();
                         alert("Data saved successfully");
-                    }, 1000);
-                    
                 },
                 failure: function (response) {
                     alert("Data could not be saved, try again later");

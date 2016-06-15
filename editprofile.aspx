@@ -46,7 +46,7 @@
                     <a href="homepage.aspx"><i class="fa "></i> <span class="nav-label">Home</span> </a>
                 </li>
                 <li>
-                    <a href="profile.aspx"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
+                    <asp:LinkButton runat="server" OnClick="GoToProfilePage"><i class="fa "></i> <span class="nav-label">View Profile</span></asp:LinkButton>
                 </li>
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
@@ -285,18 +285,6 @@
     <script>
         window.onload = populateTable;
         
-        function clearSessionVariable() {
-            $.ajax({
-                type: "POST",
-                url: "profile.aspx/ClearSessionVariables",
-                data: {},
-                contentType: "application/json; charset=utf-8",
-                success: function () {
-                    alert("You have been logged out successfully");
-                }
-            })
-        }
-
         function deleteEmptyRow()
         {
             var table = document.getElementById("workExperienceTable");
@@ -405,10 +393,14 @@
         }
         function populateTable()
         {
+            var jsonData = {
+                emailId: null
+            };
+
             $.ajax({
                 type: "POST",
                 url: "editprofile.aspx/GetExperienceData",
-                data: {},
+                data: JSON.stringify(jsonData),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess

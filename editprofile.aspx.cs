@@ -86,8 +86,11 @@ public partial class EDIT : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static List<string[]> GetExperienceData()
+    public static List<string[]> GetExperienceData(string emailId)
     {
+        if (emailId == null)
+            emailId = HttpContext.Current.Session["email"].ToString();
+
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             List<string[]> workExperienceArray = new List<string[]>();
@@ -98,7 +101,7 @@ public partial class EDIT : System.Web.UI.Page
                 getQualification.Connection = conn;
                 getQualification.CommandText = "Select * from qualification WHERE EmailID = @EmailId";
 
-                getQualification.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
+                getQualification.Parameters.AddWithValue("@EmailId", emailId);
 
                 conn.Open();
                 MySqlDataReader reader = getQualification.ExecuteReader();
@@ -168,5 +171,10 @@ public partial class EDIT : System.Web.UI.Page
         Session.Clear();
         Session.RemoveAll();
         Response.Redirect("index.aspx");
+    }
+
+    protected void GoToProfilePage(object sender, EventArgs e)
+    {
+        Response.Redirect("profile.aspx?id=" + Session["email"].ToString());
     }
 }

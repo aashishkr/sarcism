@@ -8,8 +8,6 @@ using System.Web.UI;
 
 public partial class profile : System.Web.UI.Page
 {
-    private static int numberOfFeeds = 0;
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if(Session.Count == 0)
@@ -40,13 +38,13 @@ public partial class profile : System.Web.UI.Page
             {
                 getAllFeeds.CommandType = CommandType.Text;
                 getAllFeeds.Connection = conn;
-                getAllFeeds.CommandText = "SELECT FirstName, LastName, FeedText, ImageLink, TimeStamp FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
+                getAllFeeds.CommandText = "SELECT FirstName, LastName, FeedText, ImageLink, TimeStamp, data.EmailId FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
 
                 conn.Open();
                 MySqlDataReader reader = getAllFeeds.ExecuteReader();
                 while(reader.Read())
                 {
-                    AddFeedToPage(reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
+                    AddFeedToPage(reader["EmailId"].ToString(), reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
                 }
             }
         }
@@ -90,28 +88,29 @@ public partial class profile : System.Web.UI.Page
                     userImageLink = reader["ImageLink"].ToString();
 
             }
-            AddFeedToPage(Session["FullName"].ToString(), NewFeed.Text, userImageLink, timeStamp, feedsPanel);
+            AddFeedToPage(Session["email"].ToString(), Session["FullName"].ToString(), NewFeed.Text, userImageLink, timeStamp, feedsPanel);
             NewFeed.Text = null;
         }
     }
-    private static void AddFeedToPage(string FullName, string FeedText, string imageLink, string timeStamp, UpdatePanel feedsPanel)
+    private static void AddFeedToPage(string emailId, string FullName, string FeedText, string imageLink, string timeStamp, UpdatePanel feedsPanel)
     {
-        numberOfFeeds++;
         Image postOwnerImage = new Image();
         Panel feedElement = new Panel();
         Panel mediaBodyPanel = new Panel();
         Panel feedText = new Panel();
         Button commentButton = new Button();
-        HtmlGenericControl strongTag = new HtmlGenericControl("strong");
+        HtmlGenericControl aTag = new HtmlGenericControl("a");
         
         mediaBodyPanel.CssClass = "media-body";
         feedElement.CssClass = "feed-element";
         feedText.CssClass = "well";
         commentButton.CssClass = "btn btn-primary btn-outline btn-sm pull-right";
 
-        strongTag.InnerText = " " + FullName;
+        aTag.InnerText = " " + FullName;
+        aTag.Attributes.Add("href", "profile.aspx?id=" + emailId);
         postOwnerImage.ImageUrl = imageLink;
-        postOwnerImage.Height = 25;
+        //postOwnerImage.Height = 25;
+        postOwnerImage.CssClass = "img-circle";
         
         commentButton.Text = "Comment";
         feedText.Controls.Add(new LiteralControl(FeedText));
@@ -121,7 +120,7 @@ public partial class profile : System.Web.UI.Page
         feedElement.Controls.Add(mediaBodyPanel);
         mediaBodyPanel.Controls.Add(postOwnerImage);
 
-        mediaBodyPanel.Controls.Add(strongTag);
+        mediaBodyPanel.Controls.Add(aTag);
         mediaBodyPanel.Controls.Add(new LiteralControl(" posted on " + timeStamp));
         mediaBodyPanel.Controls.Add(feedText);
         mediaBodyPanel.Controls.Add(commentButton);
@@ -139,5 +138,10 @@ public partial class profile : System.Web.UI.Page
     private static void CommentButton_Click(object sender, EventArgs e)
     {
         Button commentButton = (Button)sender;
+    }
+
+    protected void GoToProfilePage(object sender, EventArgs e)
+    {
+        Response.Redirect("profile.aspx?id=" + Session["email"].ToString());
     }
 }

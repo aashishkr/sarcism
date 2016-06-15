@@ -14,6 +14,8 @@ public partial class _Default : System.Web.UI.Page
             Response.Redirect("index.aspx");
         }
 
+        string emailId = Request.QueryString["id"];
+
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             using (MySqlCommand sample = new MySqlCommand())
@@ -21,10 +23,9 @@ public partial class _Default : System.Web.UI.Page
                 sample.CommandType = CommandType.Text;
                 sample.Connection = conn;
                 sample.CommandText = "select * FROM data WHERE EmailId = @EmailId";
-                sample.Parameters.AddWithValue("@EmailId", Session["email"].ToString());
+                sample.Parameters.AddWithValue("@EmailId", emailId);
                 conn.Open();
 
-                string FirstName = Session["email"].ToString();
                 MySqlDataReader reader = sample.ExecuteReader();
                 if (reader.Read())
                 {
@@ -54,5 +55,10 @@ public partial class _Default : System.Web.UI.Page
         Session.Clear();
         Session.RemoveAll();
         Response.Redirect("index.aspx");
+    }
+
+    protected void GoToProfilePage(object sender, EventArgs e)
+    {
+        Response.Redirect("profile.aspx?id=" + Session["email"].ToString());
     }
 }

@@ -46,7 +46,7 @@
                     <a href="homepage.aspx"><i class="fa "></i> <span class="nav-label">Home</span> </a>
                 </li>
                 <li>
-                    <a href="profile.aspx"><i class="fa "></i> <span class="nav-label">View Profile</span> </a>
+                    <asp:LinkButton runat="server" OnClick="GoToProfilePage"><i class="fa "></i> <span class="nav-label">View Profile</span></asp:LinkButton>
                 </li>
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
@@ -219,12 +219,25 @@
 
     <script>
         window.onload = populateTable;
-        
+
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
         function populateTable() {
+            jsonData = {
+                emailId: getParameterByName("id")
+            }
             $.ajax({
                 type: "POST",
                 url: "editprofile.aspx/GetExperienceData",
-                data: {},
+                data: JSON.stringify(jsonData),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: OnSuccess,

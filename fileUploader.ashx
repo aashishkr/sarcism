@@ -18,10 +18,7 @@ public class fileUploader : IHttpHandler, IRequiresSessionState
         {
             string dirFullPath = HttpContext.Current.Server.MapPath("~/MediaUploader/");
             string[] files;
-            int numFiles;
             files = Directory.GetFiles(dirFullPath);
-            numFiles = files.Length;
-            numFiles = numFiles + 1;
             string str_image = "";
 
             foreach (string s in context.Request.Files)
@@ -33,7 +30,7 @@ public class fileUploader : IHttpHandler, IRequiresSessionState
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     fileExtension = Path.GetExtension(fileName);
-                    str_image = "MyPHOTO_" + numFiles.ToString() + fileExtension;
+                    str_image = "MyPHOTO_" + HttpContext.Current.Session["email"] + fileExtension;
                     string pathToSave_100 = HttpContext.Current.Server.MapPath("~/MediaUploader/") + str_image;
                     pathToSave += str_image;
                     file.SaveAs(pathToSave_100);

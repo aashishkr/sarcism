@@ -229,6 +229,30 @@
 		</div>
             </section>
             </div>
+        <div class="box box-primary box-solid">
+            <div class="box-body">
+                <div class="row"  >
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                        <div class="box box-primary box-solid col-md-12 col-lg-12" >
+                            <div class="box-header" >
+                                <h3 class="box-title">Your Subscriptions</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <asp:CheckBox ID="SubTech" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to New Technological events."  />
+                                </div>
+                                <div class="form-group">
+                                    <asp:CheckBox ID="SubJob" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to Job and Internship Oppurtunities."  />
+                                </div>
+                                <div class="form-group">
+                                    <asp:CheckBox ID="SubGen" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to General Updates and Information about the Society."  />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="center-orientation">
@@ -236,8 +260,7 @@
               </div>
             </div>
             </div>
-            
-        </div>
+      </div>
     </div>
     </form>
         
@@ -360,8 +383,18 @@
             userDetails.pincode = document.getElementById("add_pin").value;
             userDetails.country = document.getElementById("add_country").value; 
             userDetails.workExperienceArray = tableArray;
-
-            
+            if (document.getElementById("SubJob").checked == true)
+                userDetails.sj = "1";
+            else
+                userDetails.sj = "0";
+            if (document.getElementById("SubGen").checked == true)
+                userDetails.sg = "1";
+            else
+                userDetails.sg = "0";
+            if (document.getElementById("SubTech").checked == true)
+                userDetails.st = "1";
+            else
+                userDetails.st = "0";
             $.ajax({
                 type: "POST",
                 url: "editprofile.aspx/UpdateDetails",

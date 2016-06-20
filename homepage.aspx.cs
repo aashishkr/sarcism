@@ -1,16 +1,20 @@
 ﻿using System;
+using System.IO;
 using System.Configuration;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using MySql.Data.MySqlClient;
 using System.Data;
-using System.Web.UI;
+using MySql.Data.MySqlClient;
+using System.Net;
+using System.Net.Mail;
 
 public partial class profile : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Session.Count == 0)
+        if (Session.Count == 0)
             Response.Redirect("index.aspx");
 
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
@@ -34,15 +38,15 @@ public partial class profile : System.Web.UI.Page
                 }
                 conn.Close();
             }
-            using (MySqlCommand getAllFeeds = new MySqlCommand())
+            using (MySqlCommand mAIL = new MySqlCommand())
             {
-                getAllFeeds.CommandType = CommandType.Text;
-                getAllFeeds.Connection = conn;
-                getAllFeeds.CommandText = "SELECT FirstName, LastName, FeedText, ImageLink, TimeStamp, data.EmailId FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
+                mAIL.CommandType = CommandType.Text;
+                mAIL.Connection = conn;
+                mAIL.CommandText = "SELECT FirstName, LastName, FeedText, ImageLink, TimeStamp, data.EmailId FROM newsfeed, data where newsfeed.EmailId = data.EmailId";
 
                 conn.Open();
-                MySqlDataReader reader = getAllFeeds.ExecuteReader();
-                while(reader.Read())
+                MySqlDataReader reader = mAIL.ExecuteReader();
+                while (reader.Read())
                 {
                     AddFeedToPage(reader["EmailId"].ToString(), reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), reader["FeedText"].ToString(), reader["ImageLink"].ToString(), reader["TimeStamp"].ToString(), feedsPanel);
                 }
@@ -54,7 +58,66 @@ public partial class profile : System.Web.UI.Page
     {
         if (NewFeed.Text == null || NewFeed.Text == "")
             return;
+        string val = postType.SelectedItem.Text;
+        string m2 = mailTo.SelectedItem.Text;
+        if (val == "--Select type of Post--" && m2 == "--Select Recipients--")
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select PostType and Reciepients')", true);
+            return;
+        }
+        else if (val == "--Select type of Post--")
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select PostType')", true);
+            return;
+        }
+        else if (m2 == "--Select Recipients--")
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select Reciepients')", true);
+            return;
+        }
+        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
+        {
+            using (MySqlCommand mAIL = new MySqlCommand())
+            {
+                
+                if (m2 == "Do not mail")
+                {
 
+                }
+                else if (m2 == "Email a Batch")
+                {
+                    mAIL.CommandType = CommandType.Text;
+                    mAIL.Connection = conn;
+                    mAIL.CommandText = "SELECT FirstName, LastName, EmailId,Technical,General,Openings,Batch FROM data";
+                    string m3 = batchYr.Text;
+                    conn.Open();
+                    MySqlDataReader reader = mAIL.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader[val].ToString() == "1" && m3.Equals(reader["Batch"].ToString()))
+                        {
+                            SendEmailToMe(reader["EmailId"].ToString(), reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), NewFeed.Text);
+                        }
+                    }
+                }
+                else if (m2 == "Email Everyone")
+                {
+                    mAIL.CommandType = CommandType.Text;
+                    mAIL.Connection = conn;
+                    mAIL.CommandText = "SELECT FirstName, LastName, EmailId,Technical,General,Openings FROM data";
+
+                    conn.Open();
+                    MySqlDataReader reader = mAIL.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader[val].ToString() == "1")
+                        {
+                            SendEmailToMe(reader["EmailId"].ToString(), reader["FirstName"].ToString() + " " + reader["LastName"].ToString(), NewFeed.Text);
+                        }
+                    }
+                }
+            }
+        }
         using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
         {
             string timeStamp = DateTime.Now.ToString();
@@ -89,7 +152,33 @@ public partial class profile : System.Web.UI.Page
 
             }
             AddFeedToPage(Session["email"].ToString(), Session["FullName"].ToString(), NewFeed.Text, userImageLink, timeStamp, feedsPanel);
-            NewFeed.Text = null;
+        }
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Your Query has been posted.')", true);
+        NewFeed.Text = null;
+        
+    }
+    protected void SendEmailToMe(string email, string name, string txt)
+    {
+        MailMessage message = new MailMessage();
+
+        message.From = new MailAddress("no-reply@csesociety.in");
+
+        message.To.Add(email);
+
+        message.Subject = name; // Add subject of the email
+        message.Body = txt; // Add body of the message
+        message.Priority = MailPriority.High;
+
+        SmtpClient mailClient = new SmtpClient("relay-hosting.secureserver.net");
+        mailClient.Credentials = CredentialCache.DefaultNetworkCredentials;
+
+        try
+        {
+            mailClient.Send(message);
+        }
+        catch (Exception e)
+        {
+            //  Add the exception to some log file, or email them to some person who can review what was wrong.
         }
     }
     private static void AddFeedToPage(string emailId, string FullName, string FeedText, string imageLink, string timeStamp, UpdatePanel feedsPanel)
@@ -100,7 +189,7 @@ public partial class profile : System.Web.UI.Page
         Panel feedText = new Panel();
         Button commentButton = new Button();
         HtmlGenericControl aTag = new HtmlGenericControl("a");
-        
+
         mediaBodyPanel.CssClass = "media-body";
         feedElement.CssClass = "feed-element";
         feedText.CssClass = "well";
@@ -111,7 +200,7 @@ public partial class profile : System.Web.UI.Page
         postOwnerImage.ImageUrl = imageLink;
         //postOwnerImage.Height = 25;
         postOwnerImage.CssClass = "img-circle";
-        
+
         commentButton.Text = "Comment";
         feedText.Controls.Add(new LiteralControl(FeedText));
         commentButton.Click += CommentButton_Click;

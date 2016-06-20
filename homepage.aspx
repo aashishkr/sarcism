@@ -81,9 +81,32 @@
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <asp:Textbox runat="server"  type="text" placeholder="What's on your mind..." CssClass="form-control" TextMode="MultiLine" ID="NewFeed"/><br />
+                                    <script type="text/javascript">
+                                        function ShowHideDiv() {
+                                            var choice = document.getElementById("mailTo");
+                                            var bch = document.getElementById("batchYr");
+                                            bch.style.display = choice.value == "Y" ? "block" : "none";
+                                        }
+                                        
+                                    </script>
+                                    <asp:DropDownList runat="server" ID="postType" CssClass="form-control dropdown" style="float:left;width:25%;margin-left:40%;">
+                                        <asp:ListItem Selected="True" Value="no1">--Select type of Post--</asp:ListItem>
+                                        <asp:ListItem Value="Openings">Openings</asp:ListItem>
+                                        <asp:ListItem Value="Technical">Technical</asp:ListItem>
+                                        <asp:ListItem Value="General">General</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:DropDownList runat="server" ID="mailTo" onchange="ShowHideDiv()" CssClass="form-control dropdown" style="float:left;width:20%;margin-left:4%;">
+                                        <asp:ListItem Selected="True" Value="no2">--Select Recipients--</asp:ListItem>
+                                        <asp:ListItem Value="N1">Email Everyone</asp:ListItem>
+                                        <asp:ListItem Value="Y">Email a Batch</asp:ListItem>
+                                        <asp:ListItem Value="N2">Do not mail</asp:ListItem>
+                                    </asp:DropDownList>
                                     <div class="pull-right text-right">
-                                        <asp:Button runat="server" ID="SubmitPost" CssClass="btn btn-outline btn-primary btn-block" Text="Post" OnClick="SubmitPost_Click"/>
+                                        <asp:Button runat="server" ID="SubmitPost" CssClass="btn btn-outline btn-primary btn-block" Text="Post" OnClick="SubmitPost_Click" />
                                     </div>
+
+                                    <asp:Textbox runat="server"  type="text" placeholder="Batch (yyyy)" CssClass="form-control" ID="batchYr" style="display: none;float:left;width:20%;margin-left:69%;" />
+
                                 </ContentTemplate>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="SubmitPost" EventName="Click" />

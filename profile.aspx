@@ -142,9 +142,7 @@
                                     <div class="box-body">
                                         <div class="row"  >
                                             <div class="col-md-3 col-sm-12 col-xs-12 col-lg-3"  >  <asp:Label runat="server" ID="addressLabel"></asp:Label>
-                                                <!--<asp:Label ID="add_l1" runat="server" ></asp:Label><br><asp:Label ID="add_l2" runat="server" ></asp:Label><br>
-                                                <asp:Label ID="add_city" runat="server" ></asp:Label><asp:Label ID="add_state" runat="server" ></asp:Label><asp:Label ID="add_pin" runat="server" ></asp:Label>
-                                                <br /><asp:Label ID="add_country" runat="server" ></asp:Label><br /> -->
+                                                
 										    </div>
                                         </div>
                                     </div>

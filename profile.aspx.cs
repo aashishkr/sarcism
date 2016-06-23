@@ -54,22 +54,22 @@ public partial class _Default : System.Web.UI.Page
     private static void AddAddress(string addLine1, string addLine2, string city, string state, string country, string pinCode, Label addressLable)
     {
         string finalAddress = "";
-        if (addLine1.Trim() != null)
+        if (addLine1.Trim() != "")
             finalAddress += addLine1 + ",<br>";
 
-        if (addLine2.Trim() != null)
+        if (addLine2.Trim() != "")
             finalAddress += addLine2 + ",<br>";
 
-        if (city.Trim() != null)
+        if (city.Trim() != "")
             finalAddress += city + ", ";
 
-        if (state.Trim() != null)
+        if (state.Trim() != "")
             finalAddress += state + ",<br>";
 
-        if (country.Trim() != null)
+        if (country.Trim() != "")
             finalAddress += country + "<br>";
 
-        if (pinCode.Trim() != null)
+        if (pinCode.Trim() != "")
             finalAddress += "<strong>Zip Code</strong> - " + pinCode;
 
         addressLable.Text = finalAddress;

@@ -239,13 +239,13 @@
                             </div>
                             <div class="box-body">
                                 <div class="form-group">
-                                    <asp:CheckBox ID="SubTech" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to New Technological events."  />
+                                    <asp:CheckBox ID="Technical" runat="server" Text=" You will be recieving notifications about posts which will be related to New Technological events."  />
                                 </div>
                                 <div class="form-group">
-                                    <asp:CheckBox ID="SubJob" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to Job and Internship Oppurtunities."  />
+                                    <asp:CheckBox ID="Openings" runat="server" Text=" You will be recieving notifications about posts which will be related to Job and Internship Opportunities."  />
                                 </div>
                                 <div class="form-group">
-                                    <asp:CheckBox ID="SubGen" runat="server" oncheckedchanged="onchng" Text="You will be recieving notification about posts which will be related to General Updates and Information about the Society."  />
+                                    <asp:CheckBox ID="General" runat="server" Text=" You will be recieving notifications about posts which will be related to General Updates and Information about the Society."  />
                                 </div>
                             </div>
                         </div>
@@ -383,18 +383,10 @@
             userDetails.pincode = document.getElementById("add_pin").value;
             userDetails.country = document.getElementById("add_country").value; 
             userDetails.workExperienceArray = tableArray;
-            if (document.getElementById("SubJob").checked == true)
-                userDetails.sj = "1";
-            else
-                userDetails.sj = "0";
-            if (document.getElementById("SubGen").checked == true)
-                userDetails.sg = "1";
-            else
-                userDetails.sg = "0";
-            if (document.getElementById("SubTech").checked == true)
-                userDetails.st = "1";
-            else
-                userDetails.st = "0";
+            userDetails.openings = document.getElementById("Openings").checked ? 1 : 0;
+            userDetails.technical = document.getElementById("Technical").checked ? 1 : 0;
+            userDetails.general = document.getElementById("General").checked ? 1 : 0
+          
             $.ajax({
                 type: "POST",
                 url: "editprofile.aspx/UpdateDetails",

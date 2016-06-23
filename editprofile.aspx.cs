@@ -6,14 +6,11 @@ using System.Data;
 using System.Web.Services;
 using System.Web;
 using System.Collections.Generic;
-using System.Web.Script.Services;
-using System.IO;
-
 
 public partial class EDIT : System.Web.UI.Page
 {
     [WebMethod]
-    public static void UpdateDetails(string firstName, string lastName, string gender, string dateOfBirth, string mobileNo, string fatherName, string motherName, string addressLine1, string addressLine2, string city, string state, string pincode, string country, List<List<string>> workExperienceArray,string sj,string sg,string st)
+    public static void UpdateDetails(string firstName, string lastName, string gender, string dateOfBirth, string mobileNo, string fatherName, string motherName, string addressLine1, string addressLine2, string city, string state, string pincode, string country, List<List<string>> workExperienceArray, string openings, string technical, string general)
     {
         HttpContext.Current.Session["FullName"] = firstName + " " + lastName;
 
@@ -23,7 +20,7 @@ public partial class EDIT : System.Web.UI.Page
             {
                 updatePersonalDetails.CommandType = CommandType.Text;
                 updatePersonalDetails.Connection = conn;
-                updatePersonalDetails.CommandText = "UPDATE data SET FirstName = @firstName, LastName = @lastName, FatherName = @fatherName, MotherName = @motherName, Gender = @gender, DOB = @dateOfBirth, AddLine1 = @addressLine1, AddLine2 = @addressLine2, City = @city, State = @state, Country = @country, Pin = @pincode, Contact = @mobileNo ,SubscriptionGeneral= @sg , SubscriptionTechnical= @st, SubscriptionJob= @sj Where EmailId = @EmailId";
+                updatePersonalDetails.CommandText = "UPDATE data SET FirstName = @firstName, LastName = @lastName, FatherName = @fatherName, MotherName = @motherName, Gender = @gender, DOB = @dateOfBirth, AddLine1 = @addressLine1, AddLine2 = @addressLine2, City = @city, State = @state, Country = @country, Pin = @pincode, Contact = @mobileNo ,General = @general , Technical = @technical, Openings = @openings Where EmailId = @EmailId";
 
                 updatePersonalDetails.Parameters.AddWithValue("@firstName", firstName);
                 updatePersonalDetails.Parameters.AddWithValue("@lastName", lastName);
@@ -38,9 +35,9 @@ public partial class EDIT : System.Web.UI.Page
                 updatePersonalDetails.Parameters.AddWithValue("@country", country);
                 updatePersonalDetails.Parameters.AddWithValue("@pincode", pincode);
                 updatePersonalDetails.Parameters.AddWithValue("@mobileNo", mobileNo);
-                updatePersonalDetails.Parameters.AddWithValue("@sj", sj);
-                updatePersonalDetails.Parameters.AddWithValue("@sg", sg);
-                updatePersonalDetails.Parameters.AddWithValue("@st", st);
+                updatePersonalDetails.Parameters.AddWithValue("@openings", openings);
+                updatePersonalDetails.Parameters.AddWithValue("@general", general);
+                updatePersonalDetails.Parameters.AddWithValue("@technical", technical);
                 updatePersonalDetails.Parameters.AddWithValue("@EmailId", HttpContext.Current.Session["email"].ToString());
                 conn.Open();
                 updatePersonalDetails.ExecuteNonQuery();
@@ -159,37 +156,17 @@ public partial class EDIT : System.Web.UI.Page
                         add_pin.Text = reader["Pin"].ToString();
                         add_country.Text = reader["Country"].ToString();
                         userImageThumbnail.ImageUrl = reader["ImageLink"].ToString();
-                        string x=reader["SubscriptionTechnical"].ToString();
-                        if (x == "1")
-                        {
-                            SubTech.Checked = true;
-                        }
-                        else
-                            SubTech.Checked = false;
-                        x = reader["SubscriptionGeneral"].ToString();
-                        if (x == "1")
-                        {
-                            SubGen.Checked = true;
-                        }
-                        else
-                            SubGen.Checked = false;
-                        x = reader["SubscriptionJob"].ToString();
-                        if (x == "1")
-                        {
-                            SubJob.Checked = true;
-                        }
-                        else
-                            SubJob.Checked = false;
+                        Technical.Checked = reader["Technical"].ToString().Equals("1") ? true : false;
+                        Openings.Checked = reader["Openings"].ToString().Equals("1") ? true : false;
+                        General.Checked = reader["General"].ToString().Equals("1") ? true : false;
+                        
                         conn.Close();
                     }
                 }
             }
         }
     }
-    protected void onchng(object sender, EventArgs e)
-    {
-       
-    }
+
     protected void ClearSessionVariables(object sender, EventArgs e)
     {
         Session.Abandon();

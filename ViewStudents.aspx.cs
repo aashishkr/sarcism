@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web.Script.Services;
 using System.IO;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 public partial class ViewStudents : System.Web.UI.Page
 {
@@ -22,22 +24,26 @@ public partial class ViewStudents : System.Web.UI.Page
         }
     }
     [WebMethod]
-    public static void DeleteStudent(string admissionNumber, string fullName, string batch)
+    public static void DeleteStudent(string[] Students)
     {
-        using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
+        string[] a = Students;
+        for (int i = 0; i < a.Length; i++)
         {
-            using (MySqlCommand deleteStudent = new MySqlCommand())
+            string admissionNumber=a[i];
+            using (MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString))
             {
-                deleteStudent.CommandType = CommandType.Text;
-                deleteStudent.Connection = conn;
-                deleteStudent.CommandText = "DELETE FROM validstudents WHERE admissionNumber = @admissionNumber AND Batch = @Batch";
+                using (MySqlCommand deleteStudent = new MySqlCommand())
+                {
+                    deleteStudent.CommandType = CommandType.Text;
+                    deleteStudent.Connection = conn;
+                    deleteStudent.CommandText = "DELETE FROM validstudents WHERE admissionNumber = @admissionNumber ";
 
-                deleteStudent.Parameters.AddWithValue("@admissionNumber", admissionNumber);
-                deleteStudent.Parameters.AddWithValue("@Batch", batch);
+                    deleteStudent.Parameters.AddWithValue("@admissionNumber", admissionNumber);
 
-                conn.Open();
-                deleteStudent.ExecuteNonQuery();
-                conn.Close();
+                    conn.Open();
+                    deleteStudent.ExecuteNonQuery();
+                    conn.Close();
+                }
             }
         }
     }

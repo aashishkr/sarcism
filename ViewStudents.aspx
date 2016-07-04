@@ -84,6 +84,8 @@
             var listOfStudents = response[Object.keys(response)[0]];
 
             var table = $('#StudentTable').DataTable({
+                dom: 'frtip',
+                select: true,
                 data: listOfStudents,
                 columns: [
                     { title: "Admission Number" },
@@ -93,37 +95,26 @@
                 ordering: true,
             });
 
-            $('#StudentTable tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                }
-                else {
-                    table.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                }
-            });
             $('#deleteStudent').click(function () {
-
-                var json = {
-                    admissionNumber: table.cell(table.row('.selected'), 0).data(),
-                    fullName: table.cell(table.row('.selected'), 1).data(),
-                    batch: table.cell(table.row('.selected'), 2).data()
-                }
-
+                var dataArr = [];
+                $.each($("#StudentTable tr.selected"), function () {
+                    dataArr.push($(this).find('td').eq(0).text()); 
+                });
                 $.ajax({
                     type: "POST",
                     url: "ViewStudents.aspx/DeleteStudent",
-                    contentType: "application/json",
-                    data: JSON.stringify(json),
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ Students: dataArr }),
+                    dataType: "json",
+                    traditional: true,
                     success: function (response) {
-                            location.reload();
-                            alert("Student Deleted Successfully");
+                        location.reload();
+                        alert("Student's Deleted Successfully");
                     },
                     failure: function (response) {
-                        alert("Student Could Not be Deleted. Try Again Later");
+                        alert("Student's Could Not be Deleted. Try Again Later");
                     }
                 });
-                
             });
         };
         

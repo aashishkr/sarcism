@@ -33,7 +33,7 @@
                         <a href="profile.aspx">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><asp:Label ID="user_name" runat="server" ></asp:Label></strong>
                              </span> </span> </a>
-                       
+            
                     </div>
                     <div class="logo-element">
                         SARC
@@ -47,6 +47,9 @@
                 </li>
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
+                </li>
+                <li>
+                    <a href="users.aspx"><i class="fa "></i> <span class="nav-label">Users</span> </a>
                 </li>
             </ul>
 

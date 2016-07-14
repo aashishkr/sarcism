@@ -43,6 +43,7 @@ public partial class MainPage : System.Web.UI.Page
                 }
                 conn.Close();
             }
+            Console.WriteLine("add no. " + admissionNumber.ToLower());
             using (MySqlCommand checkValidUser = new MySqlCommand())
             {
                 checkValidUser.CommandType = CommandType.Text;
@@ -51,6 +52,7 @@ public partial class MainPage : System.Web.UI.Page
 
                 checkValidUser.Parameters.AddWithValue("@AdmissionNumber", admissionNumber.ToLower());
                 checkValidUser.Parameters.AddWithValue("@Batch", batch);
+                Console.WriteLine("batch no. " + batch.ToLower());
                 conn.Open();
                 MySqlDataReader reader = checkValidUser.ExecuteReader();
                 if(!reader.Read())
@@ -62,9 +64,13 @@ public partial class MainPage : System.Web.UI.Page
             using (MySqlCommand insertNewUserDetails = new MySqlCommand())
             {
                 insertNewUserDetails.CommandType = CommandType.Text;
-                insertNewUserDetails.CommandText = "insert into data (EmailId, Password, FirstName, LastName, Batch, Contact, Gender, AdmissionNumber) values(@EmailId, @Password, @FirstName, @LastName, @Batch, @Contact, @Gender, @AdmissionNumber)";
+                insertNewUserDetails.CommandText = "insert into data (EmailId, Password, FirstName, LastName, Batch, Contact, Gender, AdmissionNumber,ImageLink) values(@EmailId, @Password, @FirstName, @LastName, @Batch, @Contact, @Gender, @AdmissionNumber,@ImageLink)";
                 insertNewUserDetails.Connection = conn;
-
+                string imageLink = "";
+                if (gender == "Male")
+                    imageLink = "MediaUploader/MaleUser.jpg";
+                else
+                    imageLink = "MediaUploader/FemaleUser.jpg";
                 insertNewUserDetails.Parameters.AddWithValue("@EmailId", emailId);
                 insertNewUserDetails.Parameters.AddWithValue("@Password", ComputeSHA(password));
                 insertNewUserDetails.Parameters.AddWithValue("@FirstName", firstName);
@@ -73,6 +79,7 @@ public partial class MainPage : System.Web.UI.Page
                 insertNewUserDetails.Parameters.AddWithValue("@Contact", contact);
                 insertNewUserDetails.Parameters.AddWithValue("@Gender", gender);
                 insertNewUserDetails.Parameters.AddWithValue("@AdmissionNumber", admissionNumber.ToLower());
+                insertNewUserDetails.Parameters.AddWithValue("@ImageLink", imageLink);
 
                 conn.Open();
                 insertNewUserDetails.ExecuteNonQuery();

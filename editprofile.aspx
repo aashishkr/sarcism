@@ -51,7 +51,9 @@
                 <li>
                     <a href="editprofile.aspx"><i class="fa "></i> <span class="nav-label">Edit Profile</span> </a>
                 </li>
-               
+               <li>
+                    <a href="users.aspx"><i class="fa "></i> <span class="nav-label">Users</span> </a>
+                </li>
             </ul>
         </div>
     </nav>

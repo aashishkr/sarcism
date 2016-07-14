@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="MainPage" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="MainPage" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -202,7 +202,7 @@
             var flag = true;
             if (password.value != confirmPassword.value)
                 flag = false;
-            if (firstName.value.length == 0 || lastName.value.length == 0 || password.value.length == 0 || emailId.value.length == 0 || batch.value.length == 0 || admissionNumber.value.length == 0)
+            if (firstName.value.length == 0 || lastName.value.length == 0 || password.value.length == 0 || emailId.value.length == 0 || batch.value.length == 0 || admissionNumber.value.length == 0||contact.value.length==0)
             {
                 flag = false;
                 alert("Some values are empty");
@@ -210,12 +210,6 @@
             if (!emailIdRegex.test(emailId.value))
             {
                 emailId.classList.add("btn-danger");
-                flag = false;
-            }
-                
-            if (!phoneNumberRegex.test(contact.value))
-            {
-                contact.classList.add("btn-danger");
                 flag = false;
             }
             if (flag == true)

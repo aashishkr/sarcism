@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="users.aspx.cs" Inherits="users" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="users.aspx.cs" Inherits="users2" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -18,26 +18,7 @@
 
     <link href="css/animate.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
-    <style>
-  .RegUser  ul{
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-      text-align: center;
-    }
-    
-   .RegUser ul li {
-      display: inline-block;
-      width: 130px;
-      padding: 10px;
-      margin: 3px;
-    }
-    
-   .RegUser ul li p {
-      margin-top: 2px;
-      margin-bottom: 2px;
-    }
-    </style>
+
 </head>
 <body>
     <form runat="server">
@@ -96,8 +77,11 @@
         </div>
         <asp:ScriptManager runat="server" EnablePartialRendering="true" />   
               <table id="RegStudents" class="display " style="display:none"></table>
-         <div class="RegUser">
-              <ul id="new-user" style="display: none;" />
+         <div class="RegUser wrapper wrapper-content animated fadeInRight">
+             <div class="row">
+              <div id="new-user" style="display:none;"></div>
+              </div>
+              
          </div> 
         </div>
       </div>
@@ -119,6 +103,13 @@
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
+         <script>
+             $(document).ready(function () {
+                 $('.contact-box').each(function () {
+                     animationHover(this, 'pulse');
+                 });
+             });
+    </script>
     <script>
         window.onload = retrieve;
         function retrieve() {
@@ -136,7 +127,7 @@
             var listOfReg = response[Object.keys(response)[0]];
 
             var table = $('#RegStudents').DataTable({
-                "lengthMenu": [16, 32, 40, 96],
+                "lengthMenu": [18, 36, 90, 120],
                 "data": listOfReg,
                 "columns": [
                   { "title": "FName" },
@@ -155,15 +146,13 @@
                 },
                 "rowCallback": function (row, data) {
                     // on each row callback
-                    var li = $(document.createElement('li'));
-                    li.addClass('RegUser');
-                    li.append('<img src=\" ' + data[3] + ' \" class= \" img-circle \" width= \" 55 \" />');
-                    li.append('<p><a href=\"profile.aspx?id=' + data[7] + ' \">' + data[0] + ' ' + data[1] + ' </a> </p>');
-                    li.append('<p> Batch ' + data[2] + '</p>');
-                    li.append('<p>' + data[4] + '</p>');
-                    li.append('<p>' + data[5] + '</p>');
-                    li.append('<p>' + data[6] + '</p>');
-                    li.appendTo('#new-user');
+                    var div = $(document.createElement('div'));
+                    div.addClass('col-lg-4');
+                    if (data[4] != "" || data[5] != "" || data[6] != "")
+                        div.append('<div style="height:170px; width:350px;"><div class= \"contact-box\"><a href=\"profile.aspx?id=' + data[7] + ' \" ><div class =\"col-sm-4\"><div><img alt=\"image\" class = \" img-circle m-t-xs img-responsive \" src =\"' + data[3] + ' \"> </div></div><div class=\"col-sm-8\"><h3><strong>' + data[0] + ' ' + data[1] + '</strong></h3><p>Batch ' + data[2] + '</p><address><i class=\"fa fa-map-marker\"></i>   ' + data[4] + ', ' + data[5] + ', ' + data[6] + '</address></div><div class=\"clearfix\"></div></a></div></div>');
+                    else
+                        div.append('<div style="height:170px; width:350px;"><div class= \"contact-box\"><a href=\"profile.aspx?id=' + data[7] + ' \" ><div class =\"col-sm-4\"><div><img alt=\"image\" class = \" img-circle m-t-xs img-responsive \" src =\"' + data[3] + ' \"> </div></div><div class=\"col-sm-8\"><h3><strong>' + data[0] + ' ' + data[1] + '</strong></h3><p>Batch ' + data[2] + '</p></div><div class=\"clearfix\"></div></a></div></div>');
+                    div.appendTo('#new-user');
                 },
                 "preDrawCallback": function (settings) {
                     // clear list before draw
